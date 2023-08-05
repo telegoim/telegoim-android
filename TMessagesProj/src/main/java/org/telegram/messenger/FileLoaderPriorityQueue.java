@@ -1,7 +1,5 @@
 package org.telegram.messenger;
 
-import com.google.android.exoplayer2.util.Log;
-
 import java.util.ArrayList;
 
 public class FileLoaderPriorityQueue {
@@ -12,27 +10,16 @@ public class FileLoaderPriorityQueue {
     int type;
     int currentAccount;
 
-    public ArrayList<FileLoadOperation> allOperations = new ArrayList<>();
-    public ArrayList<FileLoadOperation> tmpListOperations = new ArrayList<>();
+    private ArrayList<FileLoadOperation> allOperations = new ArrayList<>();
 
-    public final static int PRIORITY_VALUE_MAX = (1 << 20);
-    public final static int PRIORITY_VALUE_NORMAL = (1 << 16);
-    public final static int PRIORITY_VALUE_LOW = 0;
+    private int PRIORITY_VALUE_MAX = (1 << 20);
+    private int PRIORITY_VALUE_NORMAL = (1 << 16);
+    private int PRIORITY_VALUE_LOW = 0;
 
-    final DispatchQueue workerQueue;
-
-    boolean checkOperationsScheduled = false;
-
-    Runnable checkOperationsRunnable = () -> {
-        checkLoadingOperationInternal();
-        checkOperationsScheduled = false;
-    };
-
-    FileLoaderPriorityQueue(int currentAccount, String name, int type, DispatchQueue workerQueue) {
+    FileLoaderPriorityQueue(int currentAccount, String name, int type) {
         this.currentAccount = currentAccount;
         this.name = name;
         this.type = type;
-        this.workerQueue = workerQueue;
     }
 
     public void add(FileLoadOperation operation) {
@@ -69,38 +56,13 @@ public class FileLoaderPriorityQueue {
     }
 
     public void checkLoadingOperations() {
-        checkLoadingOperations(false);
-    }
-
-    public void checkLoadingOperations(boolean immediate) {
-        if (immediate) {
-            workerQueue.cancelRunnable(checkOperationsRunnable);
-            checkOperationsRunnable.run();
-            return;
-        }
-        if (checkOperationsScheduled) {
-            return;
-        }
-        checkOperationsScheduled = true;
-        workerQueue.cancelRunnable(checkOperationsRunnable);
-        workerQueue.postRunnable(checkOperationsRunnable, 20);
-    }
-
-    private void checkLoadingOperationInternal() {
         int activeCount = 0;
         int lastPriority = 0;
         boolean pauseAllNextOperations = false;
         int max = type == TYPE_LARGE ? MessagesController.getInstance(currentAccount).largeQueueMaxActiveOperations : MessagesController.getInstance(currentAccount).smallQueueMaxActiveOperations;
-        tmpListOperations.clear();
         for (int i = 0; i < allOperations.size(); i++) {
-            FileLoadOperation prevOperation = i > 0 ? allOperations.get(i - 1) : null;
             FileLoadOperation operation = allOperations.get(i);
             if (i > 0 && !pauseAllNextOperations) {
-                if (type == TYPE_LARGE) {
-                    if (prevOperation != null && prevOperation.isStory && prevOperation.getPriority() >= PRIORITY_VALUE_MAX) {
-                        pauseAllNextOperations = true;
-                    }
-                }
                 if (lastPriority > PRIORITY_VALUE_LOW && operation.getPriority() == PRIORITY_VALUE_LOW) {
                     pauseAllNextOperations = true;
                 }
@@ -109,9 +71,8 @@ public class FileLoaderPriorityQueue {
                 //operation will not use connections
                 //just skip
                 max++;
-                continue;
             } else if (!pauseAllNextOperations && i < max) {
-                tmpListOperations.add(operation);
+                operation.start();
                 activeCount++;
             } else {
                 if (operation.wasStarted()) {
@@ -119,9 +80,6 @@ public class FileLoaderPriorityQueue {
                 }
             }
             lastPriority = operation.getPriority();
-        }
-        for (int i = 0; i < tmpListOperations.size(); i++) {
-            tmpListOperations.get(i).start();
         }
     }
 

@@ -44,7 +44,7 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
     private float size = AndroidUtilities.dp(20);
     public int cacheType = -1;
     public String documentAbsolutePath;
-    protected int measuredSize;
+    int measuredSize;
 
     boolean spanDrawn;
     boolean positionChanged;
@@ -55,11 +55,6 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
 
     public AnimatedEmojiSpan(@NonNull TLRPC.Document document, Paint.FontMetricsInt fontMetrics) {
         this(document.id, 1.2f, fontMetrics);
-        this.document = document;
-    }
-
-    public AnimatedEmojiSpan(@NonNull TLRPC.Document document, float scale, Paint.FontMetricsInt fontMetrics) {
-        this(document.id, scale, fontMetrics);
         this.document = document;
     }
 
@@ -323,7 +318,7 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
             }
         }
 
-        public void draw(Canvas canvas, long time, float boundTop, float boundBottom, float alpha, ColorFilter colorFilter) {
+        public void draw(Canvas canvas, long time, float boundTop, float boundBottom, float alpha) {
             if ((boundTop != 0 || boundBottom != 0) && outOfBounds(boundTop, boundBottom)) {
                 skipDraw = true;
                 return;
@@ -332,9 +327,10 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
             }
 
             if (drawable.getImageReceiver() != null) {
-                drawable.setColorFilter(colorFilter == null ? Theme.chat_animatedEmojiTextColorFilter : colorFilter);
+                drawable.setColorFilter(Theme.chat_animatedEmojiTextColorFilter);
                 drawable.setTime(time);
                 drawable.draw(canvas, drawableBounds, alpha * this.alpha);
+//                drawable.setTime(0);
             }
         }
 
@@ -757,7 +753,7 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
                             if (!holder.span.spanDrawn) {
                                 continue;
                             }
-                            holder.draw(canvas, time, 0, 0, alpha, null);
+                            holder.draw(canvas, time, 0, 0, alpha);
                         }
                     }
 
@@ -843,7 +839,7 @@ public class AnimatedEmojiSpan extends ReplacementSpan {
                 holder.drawingYOffset = drawingYOffset;
                 holder.alpha = spoilerAlpha;
                 if (backgroundThreadDrawable == null) {
-                    holder.draw(canvas, time, boundTop, boundBottom, alpha, colorFilter);
+                    holder.draw(canvas, time, boundTop, boundBottom, alpha);
                 }
             }
             if (backgroundThreadDrawable != null) {

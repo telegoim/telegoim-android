@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.os.Process;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.DispatchQueue;
@@ -26,7 +25,7 @@ public class SpoilerEffectBitmapFactory {
         return factory;
     }
 
-    final DispatchQueue dispatchQueue = new DispatchQueue("SpoilerEffectBitmapFactory", true, 3 * Process.THREAD_PRIORITY_LESS_FAVORABLE);
+    final DispatchQueue dispatchQueue = new DispatchQueue("SpoilerEffectBitmapFactory");
     private Bitmap shaderBitmap;
     Bitmap bufferBitmap;
     Bitmap backgroundBitmap;
@@ -39,17 +38,17 @@ public class SpoilerEffectBitmapFactory {
     int size;
 
     private SpoilerEffectBitmapFactory() {
-        int maxSize = SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_HIGH ? AndroidUtilities.dp(150) : AndroidUtilities.dp(100);
+        int maxSize = SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_HIGH ? AndroidUtilities.dp(200) : AndroidUtilities.dp(150);
         size = (int) Math.min(Math.min(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y) * 0.5f, maxSize);
-        if (size < AndroidUtilities.dp(80)) {
-            size = AndroidUtilities.dp(80);
+        if (size < AndroidUtilities.dp(100)) {
+            size = AndroidUtilities.dp(100);
         }
     }
 
 
     Paint getPaint() {
         if (shaderBitmap == null) {
-            shaderBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ALPHA_8);
+            shaderBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
             shaderCanvas = new Canvas(shaderBitmap);
             shaderPaint = new Paint();
             shaderSpoilerEffects = new ArrayList<>(10 * 10);
@@ -89,10 +88,10 @@ public class SpoilerEffectBitmapFactory {
             dispatchQueue.postRunnable(() -> {
                 Bitmap bitmap = bufferBitmapFinall;
                 if (bitmap == null) {
-                    bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ALPHA_8);
+                    bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
                 }
                 if (backgroundBitmap == null) {
-                    backgroundBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ALPHA_8);
+                    backgroundBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
                 } else {
                     backgroundBitmap.eraseColor(Color.TRANSPARENT);
                 }

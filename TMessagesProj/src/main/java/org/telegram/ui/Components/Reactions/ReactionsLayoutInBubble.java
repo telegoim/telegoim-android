@@ -26,7 +26,6 @@ import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.SvgHelper;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
-import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.ChatMessageCell;
@@ -92,17 +91,7 @@ public class ReactionsLayoutInBubble {
 
     private static int pointer = 1;
 
-    private final static Comparator<TLObject> usersComparator = (user1, user2) -> (int) (getPeerId(user1) - getPeerId(user2));
-
-    private static long getPeerId(TLObject object) {
-        if (object instanceof TLRPC.User) {
-            return ((TLRPC.User) object).id;
-        }
-        if (object instanceof TLRPC.Chat) {
-            return ((TLRPC.Chat) object).id;
-        }
-        return 0;
-    }
+    private final static Comparator<TLRPC.User> usersComparator = (user1, user2) -> (int) (user1.id - user2.id);
 
     public ReactionsLayoutInBubble(ChatMessageCell parentView) {
         this.parentView = parentView;
@@ -151,7 +140,7 @@ public class ReactionsLayoutInBubble {
                     ReactionButton button = new ReactionButton(old, reactionCount, isSmall);
                     reactionButtons.add(button);
                     if (!isSmall && messageObject.messageOwner.reactions.recent_reactions != null) {
-                        ArrayList<TLObject> users = null;
+                        ArrayList<TLRPC.User> users = null;
 
                         if (messageObject.getDialogId() > 0 && !UserObject.isReplyUser(messageObject.getDialogId())) {
                             users = new ArrayList<>();
@@ -185,12 +174,14 @@ public class ReactionsLayoutInBubble {
                                 TLRPC.MessagePeerReaction recent = messageObject.messageOwner.reactions.recent_reactions.get(j);
                                 VisibleReaction visibleReactionPeer = VisibleReaction.fromTLReaction(recent.reaction);
                                 VisibleReaction visibleReactionCount = VisibleReaction.fromTLReaction(reactionCount.reaction);
-                                TLObject object = MessagesController.getInstance(currentAccount).getUserOrChat(MessageObject.getPeerId(recent.peer_id));
-                                if (visibleReactionPeer.equals(visibleReactionCount) && object != null) {
-                                    if (users == null) {
-                                        users = new ArrayList<>();
+                                if (visibleReactionPeer.equals(visibleReactionCount) && MessagesController.getInstance(currentAccount).getUser(MessageObject.getPeerId(recent.peer_id)) != null) {
+                                    TLRPC.User user = MessagesController.getInstance(currentAccount).getUser(MessageObject.getPeerId(recent.peer_id));
+                                    if (user != null) {
+                                        if (users == null) {
+                                            users = new ArrayList<>();
+                                        }
+                                        users.add(user);
                                     }
-                                    users.add(object);
                                 }
                             }
                             button.setUsers(users);
@@ -448,14 +439,14 @@ public class ReactionsLayoutInBubble {
         return changed;
     }
 
-    private boolean equalsUsersList(ArrayList<TLObject> users, ArrayList<TLObject> users1) {
+    private boolean equalsUsersList(ArrayList<TLRPC.User> users, ArrayList<TLRPC.User> users1) {
         if (users == null || users1 == null || users.size() != users1.size()) {
             return false;
         }
         for (int i = 0; i < users.size(); i++) {
-            TLObject user1 = users.get(i);
-            TLObject user2 = users1.get(i);
-            if (user1 == null || user2 == null || getPeerId(user1) != getPeerId(user2)) {
+            TLRPC.User user1 = users.get(i);
+            TLRPC.User user2 = users1.get(i);
+            if (user1 == null || user2 == null || user1.id != user2.id) {
                 return false;
             }
         }
@@ -531,7 +522,7 @@ public class ReactionsLayoutInBubble {
         int lastDrawnBackgroundColor;
         boolean isSelected;
         AvatarsDrawable avatarsDrawable;
-        ArrayList<TLObject> users;
+        ArrayList<TLRPC.User> users;
 
         public ReactionButton(ReactionButton reuseFrom, TLRPC.ReactionCount reactionCount, boolean isSmall) {
             if (reuseFrom != null) {
@@ -733,7 +724,7 @@ public class ReactionsLayoutInBubble {
             }
         }
 
-        public void setUsers(ArrayList<TLObject> users) {
+        public void setUsers(ArrayList<TLRPC.User> users) {
             this.users = users;
             if (users != null) {
                 Collections.sort(users, usersComparator);

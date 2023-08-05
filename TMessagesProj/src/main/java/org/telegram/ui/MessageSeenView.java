@@ -42,7 +42,6 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.tgnet.ConnectionsManager;
-import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.SimpleTextView;
 import org.telegram.ui.ActionBar.Theme;
@@ -64,7 +63,7 @@ public class MessageSeenView extends FrameLayout {
 
     ArrayList<Long> peerIds = new ArrayList<>();
     ArrayList<Integer> dates = new ArrayList<>();
-    public ArrayList<TLObject> users = new ArrayList<>();
+    public ArrayList<TLRPC.User> users = new ArrayList<>();
     AvatarsImageView avatarsImageView;
     SimpleTextView titleView;
     ImageView iconView;
@@ -118,8 +117,7 @@ public class MessageSeenView extends FrameLayout {
             if (error == null) {
                 TLRPC.Vector vector = (TLRPC.Vector) response;
                 ArrayList<Long> unknownUsers = new ArrayList<>();
-                ArrayList<Long> unknownChats = new ArrayList<>();
-                HashMap<Long, TLObject> usersLocal = new HashMap<>();
+                HashMap<Long, TLRPC.User> usersLocal = new HashMap<>();
                 ArrayList<Pair<Long, Integer>> allPeers = new ArrayList<>();
                 for (int i = 0, n = vector.objects.size(); i < n; i++) {
                     Object object = vector.objects.get(i);
@@ -141,22 +139,12 @@ public class MessageSeenView extends FrameLayout {
                         if (finalFromId == peerId) {
                             continue;
                         }
-                        if (peerId > 0) {
-                            TLRPC.User user = MessagesController.getInstance(currentAccount).getUser(peerId);
-                            allPeers.add(new Pair<>(peerId, 0));
-                            if (true || user == null) {
-                                unknownUsers.add(peerId);
-                            } else {
-                                usersLocal.put(peerId, user);
-                            }
+                        TLRPC.User user = MessagesController.getInstance(currentAccount).getUser(peerId);
+                        allPeers.add(new Pair<>(peerId, 0));
+                        if (true || user == null) {
+                            unknownUsers.add(peerId);
                         } else {
-                            TLRPC.Chat chat1 = MessagesController.getInstance(currentAccount).getChat(-peerId);
-                            allPeers.add(new Pair<>(peerId, 0));
-                            if (true || chat1 == null) {
-                                unknownChats.add(peerId);
-                            } else {
-                                usersLocal.put(peerId, chat1);
-                            }
+                            usersLocal.put(peerId, user);
                         }
                     }
                 }
@@ -278,7 +266,7 @@ public class MessageSeenView extends FrameLayout {
 
         avatarsImageView.commitTransition(false);
         if (peerIds.size() == 1 && users.get(0) != null) {
-            titleView.setText(ContactsController.formatName(users.get(0)));
+            titleView.setText(ContactsController.formatName(users.get(0).first_name, users.get(0).last_name));
         } else {
             if (peerIds.size() == 0) {
                 titleView.setText(LocaleController.getString("NobodyViewed", R.string.NobodyViewed));
@@ -363,7 +351,7 @@ public class MessageSeenView extends FrameLayout {
         AvatarDrawable avatarDrawable = new AvatarDrawable();
         AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable rightDrawable;
 
-        TLObject object;
+        TLRPC.User user;
 
         private static MessageSeenCheckDrawable seenDrawable = new MessageSeenCheckDrawable(R.drawable.msg_mini_checks, Theme.key_windowBackgroundWhiteGrayText);
 
@@ -406,22 +394,22 @@ public class MessageSeenView extends FrameLayout {
             super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(50), View.MeasureSpec.EXACTLY));
         }
 
-        public void setUser(TLObject object, int date) {
-            this.object = object;
+        public void setUser(TLRPC.User user, int date) {
+            this.user = user;
             updateStatus(false);
 
-            if (object != null) {
-                avatarDrawable.setInfo(object);
-                ImageLocation imageLocation = ImageLocation.getForUserOrChat(object, ImageLocation.TYPE_SMALL);
-                avatarImageView.setImage(imageLocation, "50_50", avatarDrawable, object);
-                nameView.setText(ContactsController.formatName(object));
+            if (user != null) {
+                avatarDrawable.setInfo(user);
+                ImageLocation imageLocation = ImageLocation.getForUser(user, ImageLocation.TYPE_SMALL);
+                avatarImageView.setImage(imageLocation, "50_50", avatarDrawable, user);
+                nameView.setText(ContactsController.formatName(user.first_name, user.last_name));
             }
 
             if (date <= 0) {
                 readView.setVisibility(GONE);
                 nameView.setTranslationY(AndroidUtilities.dp(9));
             } else {
-                readView.setText(TextUtils.concat(seenDrawable.getSpanned(getContext(), null), LocaleController.formatSeenDate(date)));
+                readView.setText(TextUtils.concat(seenDrawable.getSpanned(getContext()), LocaleController.formatSeenDate(date)));
                 readView.setVisibility(VISIBLE);
                 nameView.setTranslationY(0);
             }
@@ -441,20 +429,15 @@ public class MessageSeenView extends FrameLayout {
         public void didReceivedNotification(int id, int account, Object... args) {
             if (id == NotificationCenter.userEmojiStatusUpdated) {
                 TLRPC.User user = (TLRPC.User) args[0];
-                TLRPC.User currentUser = object instanceof TLRPC.User ? (TLRPC.User) object : null;
-                if (currentUser != null && user != null && currentUser.id == user.id) {
-                    this.object = user;
+                if (this.user != null && user != null && this.user.id == user.id) {
+                    this.user = user;
                     updateStatus(true);
                 }
             }
         }
 
         private void updateStatus(boolean animated) {
-            TLRPC.User currentUser = object instanceof TLRPC.User ? (TLRPC.User) object : null;
-            if (currentUser == null) {
-                return;
-            }
-            Long documentId = UserObject.getEmojiStatusDocumentId(currentUser);
+            Long documentId = UserObject.getEmojiStatusDocumentId(user);
             if (documentId == null) {
                 nameView.setRightDrawable(null);
                 rightDrawable.set((Drawable) null, animated);

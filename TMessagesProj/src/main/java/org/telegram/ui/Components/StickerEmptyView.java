@@ -3,7 +3,6 @@ package org.telegram.ui.Components;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -28,11 +27,9 @@ public class StickerEmptyView extends FrameLayout implements NotificationCenter.
 
     public final static int STICKER_TYPE_NO_CONTACTS = 0;
     public final static int STICKER_TYPE_SEARCH = 1;
-    public final static int STICKER_TYPE_ALBUM = 11;
-    public final static int STICKER_TYPE_PRIVACY = 12;
-    public final static int STICKER_TYPE_DONE = 16;
+    public final static int STICKER_TYPE_DONE = 2;
 
-    public LinearLayout linearLayout;
+    private LinearLayout linearLayout;
     public BackupImageView stickerView;
     private RadialProgressView progressBar;
     public final TextView title;
@@ -161,7 +158,6 @@ public class StickerEmptyView extends FrameLayout implements NotificationCenter.
             if (visibility == VISIBLE) {
                 if (progressShowing) {
                     linearLayout.animate().alpha(0f).scaleY(0.8f).scaleX(0.8f).setDuration(150).start();
-                    progressView.animate().setListener(null).cancel();
                     progressView.setVisibility(VISIBLE);
                     progressView.setAlpha(1f);
                     //showProgressRunnable.run();
@@ -235,7 +231,7 @@ public class StickerEmptyView extends FrameLayout implements NotificationCenter.
             if (set == null) {
                 set = MediaDataController.getInstance(currentAccount).getStickerSetByEmojiOrName(AndroidUtilities.STICKERS_PLACEHOLDER_PACK_NAME);
             }
-            if (set != null && stickerType >= 0 && stickerType < set.documents.size()) {
+            if (set != null && stickerType >= 0 && stickerType < set.documents.size() ) {
                 document = set.documents.get(stickerType);
             }
             imageFilter = "130_130";

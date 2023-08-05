@@ -10,25 +10,22 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.text.Layout;
 import android.text.Spanned;
-import android.text.StaticLayout;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
 import org.telegram.messenger.AndroidUtilities;
-import org.telegram.ui.Cells.TextSelectionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class SpoilersTextView extends TextView implements TextSelectionHelper.SimpleSelectabeleView {
+public class SpoilersTextView extends TextView {
     private SpoilersClickDetector clickDetector;
-    protected List<SpoilerEffect> spoilers = new ArrayList<>();
+    private List<SpoilerEffect> spoilers = new ArrayList<>();
     private Stack<SpoilerEffect> spoilersPool = new Stack<>();
     private boolean isSpoilersRevealed;
     private Path path = new Path();
     private Paint xRefPaint;
-    public boolean allowClickSpoilers = true;
 
     public SpoilersTextView(Context context) {
         this(context, true);
@@ -53,7 +50,7 @@ public class SpoilersTextView extends TextView implements TextSelectionHelper.Si
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (allowClickSpoilers && clickDetector.onTouchEvent(event))
+        if (clickDetector.onTouchEvent(event))
             return true;
         return super.dispatchTouchEvent(event);
     }
@@ -148,10 +145,5 @@ public class SpoilersTextView extends TextView implements TextSelectionHelper.Si
             SpoilerEffect.addSpoilers(this, spoilersPool, spoilers);
         }
         invalidate();
-    }
-
-    @Override
-    public Layout getStaticTextLayout() {
-        return getLayout();
     }
 }

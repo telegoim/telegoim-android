@@ -18,8 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.google.android.exoplayer2.util.Log;
-
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
 
@@ -67,26 +65,6 @@ public class RadialProgress {
     private Canvas miniDrawCanvas;
 
     private float overrideAlpha = 1.0f;
-    private Paint overridePaint = null;
-    private boolean disableUpdate;
-
-    public float getAnimatedProgress() {
-        return animatedProgressValue;
-    }
-
-    public void copyParams(RadialProgress radialProgressUpload) {
-        currentProgress = radialProgressUpload.currentProgress;
-        animatedProgressValue = radialProgressUpload.animatedProgressValue;
-        radOffset = radialProgressUpload.radOffset;
-        lastUpdateTime = System.currentTimeMillis();
-//        currentProgressTime = radialProgressUpload.currentProgressTime;
-//        animationProgressStart = radialProgressUpload.animationProgressStart;
-        invalidateParent();
-    }
-
-    public void disableUpdate(boolean disableUpdate) {
-        this.disableUpdate = disableUpdate;
-    }
 
     private class CheckDrawable extends Drawable {
 
@@ -195,9 +173,6 @@ public class RadialProgress {
     }
 
     private void updateAnimation(boolean progress) {
-        if (disableUpdate) {
-            return;
-        }
         long newTime = System.currentTimeMillis();
         long dt = newTime - lastUpdateTime;
         lastUpdateTime = newTime;
@@ -515,28 +490,18 @@ public class RadialProgress {
             }
 
             if (currentWithRound || previousWithRound) {
-                Paint finalPaint;
-                if (overridePaint != null) {
-                    finalPaint = overridePaint;
+                progressPaint.setColor(progressColor);
+                if (previousWithRound) {
+                    progressPaint.setAlpha((int) (255 * animatedAlphaValue * overrideAlpha));
                 } else {
-                    progressPaint.setColor(progressColor);
-                    if (previousWithRound) {
-                        progressPaint.setAlpha((int) (255 * animatedAlphaValue * overrideAlpha));
-                    } else {
-                        progressPaint.setAlpha((int) (255 * overrideAlpha));
-                    }
-                    finalPaint = progressPaint;
+                    progressPaint.setAlpha((int) (255 * overrideAlpha));
                 }
                 cicleRect.set(progressRect.left + diff, progressRect.top + diff, progressRect.right - diff, progressRect.bottom - diff);
-                canvas.drawArc(cicleRect, -90 + radOffset, Math.max(4, 360 * animatedProgressValue), false, finalPaint);
+                canvas.drawArc(cicleRect, -90 + radOffset, Math.max(4, 360 * animatedProgressValue), false, progressPaint);
                 updateAnimation(true);
             } else {
                 updateAnimation(false);
             }
         }
-    }
-
-    public void setPaint(Paint paint) {
-        overridePaint = paint;
     }
 }

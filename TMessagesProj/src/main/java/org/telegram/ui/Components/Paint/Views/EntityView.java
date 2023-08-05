@@ -4,10 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -15,12 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.google.zxing.common.detector.MathUtils;
-
 import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.Utilities;
-import org.telegram.ui.Components.AnimatedFloat;
-import org.telegram.ui.Components.ButtonBounce;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.Point;
 import org.telegram.ui.Components.Rect;
@@ -36,24 +29,16 @@ public class EntityView extends FrameLayout {
     private final static float STICKY_THRESHOLD_ANGLE = 15;
     private final static float STICKY_TRIGGER_ANGLE = 5;
 
-    private final static float STICKY_THRESHOLD_DP = 16;
-    private final static float STICKY_TRIGGER_DP = 6;
-
-    private ButtonBounce bounce = new ButtonBounce(this);
+    private final static float STICKY_THRESHOLD_DP = 48;
+    private final static float STICKY_TRIGGER_DP = 16;
 
     public interface EntityViewDelegate {
         boolean onEntitySelected(EntityView entityView);
         boolean onEntityLongClicked(EntityView entityView);
         boolean allowInteraction(EntityView entityView);
         int[] getCenterLocation(EntityView entityView);
-        float[] getTransformedTouch(MotionEvent e, float x, float y);
+        float[] getTransformedTouch(float x, float y);
         float getCropRotation();
-
-        default void onEntityDraggedTop(boolean value) {}
-        default void onEntityDraggedBottom(boolean value) {}
-        default void onEntityDragStart() {}
-        default void onEntityDragEnd(boolean delete) {}
-        default void onEntityDragTrash(boolean enter) {}
     }
 
     private float previousLocationX;
@@ -61,9 +46,7 @@ public class EntityView extends FrameLayout {
     private boolean hasPanned = false;
     private boolean hasReleased = false;
     private boolean hasTransformed = false;
-    private boolean announcedDrag = false;
     private boolean announcedSelection = false;
-    private boolean announcedTrash = false;
     private boolean recognizedLongPress = false;
 
     private EntityViewDelegate delegate;
@@ -161,40 +144,14 @@ public class EntityView extends FrameLayout {
                 ((EntitiesContainerView) getParent()).invalidate();
             }
 
-            if (!announcedDrag && delegate != null) {
-                announcedDrag = true;
-                delegate.onEntityDragStart();
-            }
-            if (!isSelected() && !announcedSelection && delegate != null) {
-                delegate.onEntitySelected(this);
-                announcedSelection = true;
-            }
-
-            if (delegate != null) {
-                delegate.onEntityDraggedTop(position.y - getHeight() / 2f * scale < AndroidUtilities.dp(66));
-                delegate.onEntityDraggedBottom(position.y + getHeight() / 2f * scale > ((View) getParent()).getHeight() - AndroidUtilities.dp(64 + 50));
-            }
-
-            updateTrash(MathUtils.distance(x, y,  ((View) getParent()).getWidth() / 2f, ((View) getParent()).getHeight() - AndroidUtilities.dp(76)) < AndroidUtilities.dp(32));
-
-            bounce.setPressed(false);
-
             return true;
         }
         return false;
     }
 
     private void onTouchUp() {
-        if (announcedDrag) {
-            delegate.onEntityDragEnd(announcedTrash);
-            announcedDrag = false;
-        }
         if (!recognizedLongPress && !hasPanned && !hasTransformed && !announcedSelection && delegate != null) {
             delegate.onEntitySelected(this);
-        }
-        if (hasPanned && delegate != null) {
-            delegate.onEntityDraggedTop(false);
-            delegate.onEntityDraggedBottom(false);
         }
         recognizedLongPress = false;
         hasPanned = false;
@@ -237,13 +194,17 @@ public class EntityView extends FrameLayout {
             return false;
         }
 
-        float[] xy = delegate.getTransformedTouch(event, event.getRawX(), event.getRawY());
+        float[] xy = delegate.getTransformedTouch(event.getRawX(), event.getRawY());
         int action = event.getActionMasked();
         boolean handled = false;
 
         switch (action) {
             case MotionEvent.ACTION_POINTER_DOWN:
             case MotionEvent.ACTION_DOWN: {
+                if (!isSelected() && delegate != null) {
+                    delegate.onEntitySelected(this);
+                    announcedSelection = true;
+                }
                 previousLocationX = xy[0];
                 previousLocationY = xy[1];
                 handled = true;
@@ -252,7 +213,6 @@ public class EntityView extends FrameLayout {
                 if (getParent() instanceof EntitiesContainerView && (hasStickyX || hasStickyY)) {
                     ((EntitiesContainerView) getParent()).invalidate();
                 }
-                bounce.setPressed(true);
             }
             break;
 
@@ -265,7 +225,6 @@ public class EntityView extends FrameLayout {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
                 onTouchUp();
-                bounce.setPressed(false);
                 handled = true;
             }
             break;
@@ -273,7 +232,7 @@ public class EntityView extends FrameLayout {
 
         gestureDetector.onTouchEvent(event);
 
-        return super.onTouchEvent(event) || handled;
+        return handled;
     }
 
     private void runStickyXAnimator(float... values) {
@@ -324,7 +283,7 @@ public class EntityView extends FrameLayout {
         View parent = (View) getParent();
         if (parent != null) {
             if (!hasStickyX) {
-                if (Math.abs(position.x - parent.getMeasuredWidth() / 2f) <= AndroidUtilities.dp(STICKY_TRIGGER_DP) && position.y < parent.getMeasuredHeight() - AndroidUtilities.dp(112 + 64)) {
+                if (Math.abs(position.x - parent.getMeasuredWidth() / 2f) <= AndroidUtilities.dp(STICKY_TRIGGER_DP)) {
                     hasStickyX = true;
                     try {
                         performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
@@ -342,7 +301,7 @@ public class EntityView extends FrameLayout {
                     runStickyXAnimator(0, 1);
                 }
             } else {
-                if (Math.abs(position.x - parent.getMeasuredWidth() / 2f) > AndroidUtilities.dp(STICKY_THRESHOLD_DP) || position.y >= parent.getMeasuredHeight() - AndroidUtilities.dp(112 + 64)) {
+                if (Math.abs(position.x - parent.getMeasuredWidth() / 2f) > AndroidUtilities.dp(STICKY_THRESHOLD_DP)) {
                     hasStickyX = false;
                     if (getParent() instanceof EntitiesContainerView) {
                         ((EntitiesContainerView) getParent()).invalidate();
@@ -520,7 +479,7 @@ public class EntityView extends FrameLayout {
     }
 
     public boolean isSelected() {
-        return selecting;
+        return selectionView != null;
     }
 
     protected SelectionView createSelectionView() {
@@ -533,58 +492,32 @@ public class EntityView extends FrameLayout {
         }
     }
 
-    private float selectT;
-    private ValueAnimator selectAnimator;
-    private boolean selecting = false;
-    private void updateSelect(ViewGroup selectionContainer, boolean select) {
-        if (selecting != select) {
-            selecting = select;
-
-            if (selectAnimator != null) {
-                selectAnimator.cancel();
-                selectAnimator = null;
-            }
-
-            if (selectionView == null) {
-                if (!select && selectionContainer == null) {
-                    return;
-                }
-                selectionView = createSelectionView();
-                selectionContainer.addView(selectionView);
-                selectT = 0;
-            }
-            selectionView.updatePosition();
-
-            selectAnimator = ValueAnimator.ofFloat(selectT, select ? 1f : 0f);
-            selectAnimator.addUpdateListener(anm -> {
-                selectT = (float) anm.getAnimatedValue();
-                if (selectionView != null) {
-                    selectionView.setScaleX(AndroidUtilities.lerp(0.9f, 1f, selectT) * Utilities.clamp(trashScale * 1.25f, 1, 0));
-                    selectionView.setScaleY(AndroidUtilities.lerp(0.9f, 1f, selectT) * Utilities.clamp(trashScale * 1.25f, 1, 0));
-                    selectionView.setAlpha(selectT * Math.max(0, trashScale - .8f) * 5);
-                }
-            });
-            selectAnimator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (!selecting) {
-                        AndroidUtilities.removeFromParent(selectionView);
-                        selectionView = null;
-                    }
-                }
-            });
-            selectAnimator.setDuration(280);
-            selectAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
-            selectAnimator.start();
-        }
-    }
-
     public void select(ViewGroup selectionContainer) {
-        updateSelect(selectionContainer, true);
+        SelectionView selectionView = createSelectionView();
+        selectionView.setAlpha(0f);
+        selectionView.setScaleX(0.9f);
+        selectionView.setScaleY(0.9f);
+        selectionView.animate().cancel();
+        selectionView.animate().alpha(1f).scaleX(1).scaleY(1).setDuration(150).setInterpolator(CubicBezierInterpolator.DEFAULT).setListener(null).start();
+        this.selectionView = selectionView;
+        selectionContainer.addView(selectionView);
+        selectionView.updatePosition();
     }
 
     public void deselect() {
-        updateSelect(null, false);
+        if (selectionView == null) {
+            return;
+        }
+        if (selectionView.getParent() != null) {
+            selectionView.animate().cancel();
+            selectionView.animate().alpha(0f).scaleX(0.9f).scaleY(0.9f).setDuration(150).setInterpolator(CubicBezierInterpolator.DEFAULT).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    AndroidUtilities.removeFromParent(selectionView);
+                    selectionView = null;
+                }
+            }).start();
+        }
     }
 
     public void setSelectionVisibility(boolean visible) {
@@ -615,13 +548,13 @@ public class EntityView extends FrameLayout {
             paint.setStrokeWidth(AndroidUtilities.dp(2));
             paint.setStrokeCap(Paint.Cap.ROUND);
             paint.setPathEffect(new DashPathEffect(new float[]{AndroidUtilities.dp(10), AndroidUtilities.dp(10)}, .5f));
-            paint.setShadowLayer(AndroidUtilities.dpf2(0.75f), 0, 0, 0x50000000);
+            paint.setShadowLayer(AndroidUtilities.dp(0.75f), 0, AndroidUtilities.dp(1), 0x70000000);
 
-            dotPaint.setColor(0xff1A9CFF);
+            dotPaint.setColor(0xff3ccaef);
             dotStrokePaint.setColor(0xffffffff);
             dotStrokePaint.setStyle(Paint.Style.STROKE);
-            dotStrokePaint.setStrokeWidth(AndroidUtilities.dpf2(2.66f));
-            dotStrokePaint.setShadowLayer(AndroidUtilities.dpf2(0.75f), 0, 0, 0x50000000);
+            dotStrokePaint.setStrokeWidth(AndroidUtilities.dp(2));
+            dotStrokePaint.setShadowLayer(AndroidUtilities.dp(0.75f), 0, AndroidUtilities.dp(1), 0x70000000);
         }
 
         protected void updatePosition() {
@@ -646,7 +579,7 @@ public class EntityView extends FrameLayout {
 
             float rawX = event.getRawX();
             float rawY = event.getRawY();
-            float[] xy = delegate.getTransformedTouch(event, rawX, rawY);
+            float[] xy = delegate.getTransformedTouch(rawX, rawY);
             float x = xy[0];
             float y = xy[1];
             switch (action) {
@@ -677,30 +610,23 @@ public class EntityView extends FrameLayout {
 
                         if (hasTransformed || Math.abs(tx) > AndroidUtilities.dp(2) || Math.abs(ty) > AndroidUtilities.dp(2)) {
                             hasTransformed = true;
-//                            float radAngle = (float) Math.toRadians(getRotation());
-//                            float delta = (float) (tx * Math.cos(radAngle) + ty * Math.sin(radAngle));
-//                            if (currentHandle == SELECTION_LEFT_HANDLE) {
-//                                delta *= -1;
-//                            }
-//
-//                            if (getMeasuredWidth() != 0) {
-//                                float scaleDelta = 1 + (delta * 2) / getMeasuredWidth();
-//                                scale(scaleDelta);
-//                            }
-
-                            int[] pos = delegate.getCenterLocation(EntityView.this);
-                            float pd = MathUtils.distance(pos[0], pos[1], previousLocationX, previousLocationY);
-                            float d = MathUtils.distance(pos[0], pos[1], x, y);
-                            if (pd > 0) {
-                                float scaleFactor = d / pd;
-                                scale(scaleFactor);
+                            float radAngle = (float) Math.toRadians(getRotation());
+                            float delta = (float) (tx * Math.cos(radAngle) + ty * Math.sin(radAngle));
+                            if (currentHandle == SELECTION_LEFT_HANDLE) {
+                                delta *= -1;
                             }
 
+                            if (getMeasuredWidth() != 0) {
+                                float scaleDelta = 1 + (delta * 2) / getMeasuredWidth();
+                                scale(scaleDelta);
+                            }
+
+                            int[] pos = delegate.getCenterLocation(EntityView.this);
                             float angle = 0;
                             if (currentHandle == SELECTION_LEFT_HANDLE) {
-                                angle = (float) Math.atan2(pos[1] - y, pos[0] - x);
+                                angle = (float) Math.atan2(pos[1] - rawY, pos[0] - rawX);
                             } else if (currentHandle == SELECTION_RIGHT_HANDLE) {
-                                angle = (float) Math.atan2(y - pos[1], x - pos[0]);
+                                angle = (float) Math.atan2(rawY - pos[1], rawX - pos[0]);
                             }
 
                             rotate((float) Math.toDegrees(angle) - delegate.getCropRotation());
@@ -728,50 +654,7 @@ public class EntityView extends FrameLayout {
                 gestureDetector.onTouchEvent(event);
             }
 
-            return super.onTouchEvent(event) || handled;
+            return handled;
         }
-    }
-
-    private float trashScale = 1f;
-    private ValueAnimator trashAnimator;
-    private void updateTrash(boolean enter) {
-        if (announcedTrash != enter) {
-            if (trashAnimator != null) {
-                trashAnimator.cancel();
-                trashAnimator = null;
-            }
-            trashAnimator = ValueAnimator.ofFloat(trashScale, enter ? .5f : 1f);
-            trashAnimator.addUpdateListener(anm -> {
-                trashScale = (float) anm.getAnimatedValue();
-                setAlpha(trashScale);
-                if (selectionView != null) {
-                    selectionView.setScaleX(AndroidUtilities.lerp(0.9f, 1f, selectT) * Utilities.clamp(trashScale * 1.25f, 1, 0));
-                    selectionView.setScaleY(AndroidUtilities.lerp(0.9f, 1f, selectT) * Utilities.clamp(trashScale * 1.25f, 1, 0));
-                    selectionView.setAlpha(selectT * Math.max(0, trashScale - .8f) * 5);
-                }
-                invalidate();
-            });
-            trashAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
-            trashAnimator.setDuration(280);
-            trashAnimator.start();
-
-            announcedTrash = enter;
-            if (delegate != null) {
-                delegate.onEntityDragTrash(enter);
-            }
-        }
-    }
-
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        final float scale = bounce.getScale(.05f);
-        canvas.save();
-        canvas.scale(scale, scale, getWidth() / 2f, getHeight() / 2f);
-        if (getParent() instanceof View) {
-            View p = (View) getParent();
-            canvas.scale(trashScale, trashScale, p.getWidth() / 2f - getX(), p.getHeight() - AndroidUtilities.dp(76) - getY());
-        }
-        super.dispatchDraw(canvas);
-        canvas.restore();
     }
 }

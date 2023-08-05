@@ -46,8 +46,6 @@ public class ZoomControlView extends View {
 
     private ZoomControlViewDelegate delegate;
 
-    public boolean enabledTouch = true;
-
     public interface ZoomControlViewDelegate {
         void didSetZoom(float zoom);
     }
@@ -108,9 +106,6 @@ public class ZoomControlView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!enabledTouch) {
-            return false;
-        }
         float x = event.getX();
         float y = event.getY();
         int action = event.getAction();
@@ -194,10 +189,6 @@ public class ZoomControlView extends View {
             invalidate();
         }
         return handled || pressed || knobPressed || super.onTouchEvent(event);
-    }
-
-    public boolean isTouch() {
-        return pressed || knobPressed;
     }
 
     private boolean animateToZoom(float zoom) {

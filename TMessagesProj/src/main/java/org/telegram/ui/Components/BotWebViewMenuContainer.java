@@ -777,7 +777,11 @@ public class BotWebViewMenuContainer extends FrameLayout implements Notification
 
     private int getColor(int key) {
         Theme.ResourcesProvider resourcesProvider = parentEnterView.getParentFragment().getResourceProvider();
-        return Theme.getColor(key, resourcesProvider);
+        if (resourcesProvider != null && resourcesProvider.contains(key)) {
+            return resourcesProvider.getColor(key);
+        } else {
+            return Theme.getColor(key);
+        }
     }
 
     /**

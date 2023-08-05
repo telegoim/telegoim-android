@@ -11,7 +11,6 @@ package org.telegram.messenger;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
@@ -671,7 +670,7 @@ public class FileUploadOperation {
             }
         }), forceSmallFile ? ConnectionsManager.RequestFlagCanCompress : 0, ConnectionsManager.DEFAULT_DATACENTER_ID, connectionType, true);
         if (BuildVars.LOGS_ENABLED) {
-            FileLog.d("debug_uploading: " + " send reqId " + requestToken[0] + " " + uploadingFilePath);
+            FileLog.d("debug_uploading: " + " send reqId " + requestToken + " " + uploadingFilePath);
         }
         requestTokens.put(requestNumFinal, requestToken[0]);
     }

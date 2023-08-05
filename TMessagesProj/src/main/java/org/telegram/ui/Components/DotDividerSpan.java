@@ -14,11 +14,10 @@ public class DotDividerSpan extends ReplacementSpan {
     Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
     int color;
     int topPadding;
-    private int size = 3;
 
     @Override
     public int getSize(@NonNull Paint paint, CharSequence charSequence, int i, int i1, @Nullable Paint.FontMetricsInt fontMetricsInt) {
-        return AndroidUtilities.dp(size);
+        return AndroidUtilities.dp(3);
     }
 
     @Override
@@ -26,16 +25,11 @@ public class DotDividerSpan extends ReplacementSpan {
         if (color != paint.getColor()) {
             p.setColor(paint.getColor());
         }
-        float offset = AndroidUtilities.dpf2(size) / 2f;
         float radius = AndroidUtilities.dpf2(3) / 2f;
-        canvas.drawCircle(x + offset, (bottom - top) / 2 + topPadding, radius, p);
+        canvas.drawCircle(x + radius, (bottom - top) / 2 + topPadding, radius, p);
     }
 
     public void setTopPadding(int topPadding) {
         this.topPadding = topPadding;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 }

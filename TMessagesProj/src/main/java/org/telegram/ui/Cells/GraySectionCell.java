@@ -24,7 +24,6 @@ import org.telegram.ui.ActionBar.ThemeDescription;
 import org.telegram.ui.Components.AnimatedTextView;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.Premium.CarouselView;
 import org.telegram.ui.Components.RecyclerListView;
 
 import java.util.List;
@@ -83,7 +82,7 @@ public class GraySectionCell extends FrameLayout {
         return textView.getText();
     }
 
-    public void setText(CharSequence text) {
+    public void setText(String text) {
         textView.setText(text);
         rightTextView.setVisibility(GONE);
         rightTextView.setOnClickListener(null);
@@ -102,18 +101,6 @@ public class GraySectionCell extends FrameLayout {
 
     public void setRightText(String right, boolean moveDown) {
         rightTextView.setText(right, true, moveDown);
-        rightTextView.setVisibility(VISIBLE);
-    }
-
-    public void setRightText(String right, OnClickListener onClickListener) {
-        rightTextView.setText(right, false);
-        rightTextView.setOnClickListener(onClickListener);
-        rightTextView.setVisibility(VISIBLE);
-    }
-
-    public void setRightText(String right, boolean moveDown, OnClickListener onClickListener) {
-        rightTextView.setText(right, true, moveDown);
-        rightTextView.setOnClickListener(onClickListener);
         rightTextView.setVisibility(VISIBLE);
     }
 

@@ -287,8 +287,6 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
         progressViewStyle = progressStyle;
     }
 
-    private long shownAt;
-
     @Override
     public void show() {
         super.show();
@@ -301,7 +299,6 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
                 .setDuration(190)
                 .start();
         }
-        shownAt = System.currentTimeMillis();
     }
 
     @Override
@@ -1158,7 +1155,7 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
         if (!canCacnel || cancelDialog != null) {
             return;
         }
-        Builder builder = new Builder(getContext(), resourcesProvider);
+        Builder builder = new Builder(getContext());
         builder.setTitle(LocaleController.getString("StopLoadingTitle", R.string.StopLoadingTitle));
         builder.setMessage(LocaleController.getString("StopLoading", R.string.StopLoading));
         builder.setPositiveButton(LocaleController.getString("WaitMore", R.string.WaitMore), null);
@@ -1256,15 +1253,6 @@ public class AlertDialog extends Dialog implements Drawable.Callback, Notificati
             if (messageTextView != null) {
                 messageTextView.invalidate();
             }
-        }
-    }
-
-    public void dismissUnless(long minDuration) {
-        long currentShowDuration = System.currentTimeMillis() - shownAt;
-        if (currentShowDuration < minDuration) {
-            AndroidUtilities.runOnUIThread(this::dismiss, currentShowDuration - minDuration);
-        } else {
-            dismiss();
         }
     }
 

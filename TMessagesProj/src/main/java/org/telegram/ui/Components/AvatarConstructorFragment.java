@@ -295,7 +295,7 @@ public class AvatarConstructorFragment extends BaseFragment {
 
             @Override
             public boolean onInterceptTouchEvent(MotionEvent ev) {
-                if (keyboardVisibleProgress == 0) {
+                if (keyboardVisibleProgress == 0 && AndroidUtilities.findClickableView(this, ev.getX(), ev.getY())) {
                     return false;
                 }
                 return onTouchEvent(ev);

@@ -5,9 +5,9 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class CacheFetcher<Args, R> {
+public abstract class Fetcher<Args, R> {
 
-    protected void getRemote(int currentAccount, Args arguments, long hash, Utilities.Callback4<Boolean, R, Long, Boolean> onResult) {
+    protected void getRemote(int currentAccount, Args arguments, long hash, Utilities.Callback3<Boolean, R, Long> onResult) {
         // Implement this function
     }
 
@@ -50,10 +50,8 @@ public abstract class CacheFetcher<Args, R> {
         saveCallback(key, onResult);
         getLocal(currentAccount, arguments, (hash, data) -> {
             if (shouldRequest(key)) {
-                getRemote(currentAccount, arguments, hash, (notModified, remoteData, newHash, requestSuccess) -> {
-                    if (requestSuccess) {
-                        saveLastRequested(key);
-                    }
+                saveLastRequested(key);
+                getRemote(currentAccount, arguments, hash, (notModified, remoteData, newHash) -> {
                     if (notModified) {
                         cacheResult(key, data);
                         callCallbacks(key, data);
@@ -99,13 +97,6 @@ public abstract class CacheFetcher<Args, R> {
     private boolean shouldRequest(Pair<Integer, Args> key) {
         Long lastRequested = lastRequestedRemotely != null ? lastRequestedRemotely.get(key) : null;
         return lastRequested == null || System.currentTimeMillis() - lastRequested >= requestRemotelyTimeout;
-    }
-
-    public void forceRequest(int currentAccount, Args args) {
-        if (lastRequestedRemotely == null) {
-            return;
-        }
-        lastRequestedRemotely.remove(new Pair<>(currentAccount, args));
     }
 
     private boolean isLoading(Pair<Integer, Args> key) {

@@ -1,9 +1,5 @@
 package org.telegram.ui.Components.Paint.Views;
 
-import static org.telegram.messenger.AndroidUtilities.dp;
-import static org.telegram.messenger.AndroidUtilities.lerp;
-import static org.telegram.messenger.AndroidUtilities.rectTmp;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -19,7 +15,6 @@ import androidx.core.math.MathUtils;
 import androidx.core.view.GestureDetectorCompat;
 
 import org.telegram.messenger.AndroidUtilities;
-import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.AnimatedFloat;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.Paint.RenderView;
@@ -102,9 +97,9 @@ public class PaintWeightChooserView extends View {
             }
         });
         colorPaint.setColor(Color.WHITE);
-        colorPaint.setShadowLayer(dp(4), 0, dp(2), 0x50000000);
+        colorPaint.setShadowLayer(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(2), 0x50000000);
         backgroundPaint.setColor(0x40ffffff);
-        backgroundPaint.setShadowLayer(dp(3), 0, dp(1), 0x26000000);
+        backgroundPaint.setShadowLayer(AndroidUtilities.dp(3), 0, AndroidUtilities.dp(1), 0x26000000);
     }
 
     public void setShowPreview(boolean showPreview) {
@@ -141,9 +136,9 @@ public class PaintWeightChooserView extends View {
 
         setTranslationY(y);
 
-        int contentHeight = lerp(fromContentHeight, newContentHeight, panProgress);
+        int contentHeight = AndroidUtilities.lerp(fromContentHeight, newContentHeight, panProgress);
         int height = (int) (contentHeight * 0.3f);
-        touchRect.set(0, (contentHeight - height) / 2f, dp(32), (contentHeight + height) / 2f);
+        touchRect.set(0, (contentHeight - height) / 2f, AndroidUtilities.dp(32), (contentHeight + height) / 2f);
 
         invalidate();
     }
@@ -189,7 +184,7 @@ public class PaintWeightChooserView extends View {
 
         if (!isPanTransitionInProgress) {
             int height = (int) (getHeight() * 0.3f);
-            touchRect.set(0, (getHeight() - height) / 2f, dp(32), (getHeight() + height) / 2f);
+            touchRect.set(0, (getHeight() - height) / 2f, AndroidUtilities.dp(32), (getHeight() + height) / 2f);
         }
     }
 
@@ -224,43 +219,43 @@ public class PaintWeightChooserView extends View {
         }
 
         float height = touchRect.height();
-        int bigRadius = dp(16);
-        int smallRadius = dp(3);
-        int smallLine = dp(3);
+        int bigRadius = AndroidUtilities.dp(16);
+        int smallRadius = AndroidUtilities.dp(3);
+        int smallLine = AndroidUtilities.dp(3);
 
         path.rewind();
         path.moveTo(0, 0);
-        rectTmp.set(lerp(-smallLine, -bigRadius, showProgress), 0, lerp(smallLine, bigRadius, showProgress), lerp(smallLine, bigRadius, showProgress) * 2);
-        path.arcTo(rectTmp, -90, 90);
-        path.lineTo(lerp(smallLine, smallRadius, showProgress), height);
-        rectTmp.set(lerp(-smallLine, -smallRadius, showProgress), height - smallRadius * 2, lerp(smallLine, smallRadius, showProgress), height);
-        path.arcTo(rectTmp, 0, 180);
+        AndroidUtilities.rectTmp.set(AndroidUtilities.lerp(-smallLine, -bigRadius, showProgress), 0, AndroidUtilities.lerp(smallLine, bigRadius, showProgress), bigRadius * 2);
+        path.arcTo(AndroidUtilities.rectTmp, -90, 90);
+        path.lineTo(AndroidUtilities.lerp(smallLine, smallRadius, showProgress), height);
+        AndroidUtilities.rectTmp.set(AndroidUtilities.lerp(-smallLine, -smallRadius, showProgress), height - smallRadius * 2, AndroidUtilities.lerp(smallLine, smallRadius, showProgress), height);
+        path.arcTo(AndroidUtilities.rectTmp, 0, 180);
 
-        path.lineTo(lerp(-smallLine, -bigRadius, showProgress), bigRadius);
-        rectTmp.set(lerp(-smallLine, -bigRadius, showProgress), 0, lerp(smallLine, bigRadius, showProgress), bigRadius * 2);
-        path.arcTo(rectTmp, -180, 90);
+        path.lineTo(AndroidUtilities.lerp(-smallLine, -bigRadius, showProgress), bigRadius);
+        AndroidUtilities.rectTmp.set(AndroidUtilities.lerp(-smallLine, -bigRadius, showProgress), 0, AndroidUtilities.lerp(smallLine, bigRadius, showProgress), bigRadius * 2);
+        path.arcTo(AndroidUtilities.rectTmp, -180, 90);
 
         path.close();
 
         if (hideProgress != 0f) {
-            rectTmp.set(0, 0, getWidth(), getHeight());
-            canvas.saveLayerAlpha(rectTmp, (int) (0xFF * (1f - hideProgress)), Canvas.ALL_SAVE_FLAG);
+            AndroidUtilities.rectTmp.set(0, 0, getWidth(), getHeight());
+            canvas.saveLayerAlpha(AndroidUtilities.rectTmp, (int) (0xFF * (1f - hideProgress)), Canvas.ALL_SAVE_FLAG);
         }
 
         canvas.save();
-        canvas.translate(dp(32) * CubicBezierInterpolator.DEFAULT.getInterpolation(showProgress), touchRect.top);
+        canvas.translate(AndroidUtilities.dp(32) * CubicBezierInterpolator.DEFAULT.getInterpolation(showProgress), touchRect.top);
         canvas.drawPath(path, backgroundPaint);
         canvas.restore();
 
         drawCircleWithShadow(
             canvas,
-            dp(32) * CubicBezierInterpolator.DEFAULT.getInterpolation(showProgress),
+            AndroidUtilities.dp(32) * CubicBezierInterpolator.DEFAULT.getInterpolation(showProgress),
             MathUtils.clamp(
                 touchRect.top + touchRect.height() * (1f - (weight - min) / (max - min)),
                 touchRect.top + bigRadius,
                 touchRect.bottom - Math.min(smallRadius * 1.5f, bigRadius)
             ),
-            lerp(dp(12), lerp(Math.min(smallRadius * 1.5f, bigRadius), bigRadius, (weight - min) / (max - min)), showProgress),
+            AndroidUtilities.lerp(AndroidUtilities.dp(12), AndroidUtilities.lerp(Math.min(smallRadius * 1.5f, bigRadius), bigRadius, (weight - min) / (max - min)), showProgress),
             false
         );
 
@@ -276,7 +271,7 @@ public class PaintWeightChooserView extends View {
 
     private void drawCircleWithShadow(Canvas canvas, float cx, float cy, float rad, boolean useAlpha) {
         if (useAlpha) {
-            AndroidUtilities.rectTmp.set(cx - rad - dp(6), cy - rad - dp(6), cx + rad + dp(6), cy + rad + dp(6));
+            AndroidUtilities.rectTmp.set(cx - rad - AndroidUtilities.dp(6), cy - rad - AndroidUtilities.dp(6), cx + rad + AndroidUtilities.dp(6), cy + rad + AndroidUtilities.dp(6));
             canvas.saveLayerAlpha(AndroidUtilities.rectTmp, (int) (0xFF * showProgress), Canvas.ALL_SAVE_FLAG);
         }
         canvas.drawCircle(cx, cy, rad, colorPaint);

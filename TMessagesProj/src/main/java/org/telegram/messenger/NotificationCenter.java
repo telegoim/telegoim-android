@@ -19,6 +19,7 @@ import androidx.annotation.UiThread;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class NotificationCenter {
@@ -210,7 +211,6 @@ public class NotificationCenter {
 
     public static final int didUpdatePremiumGiftStickers = totalEvents++;
     public static final int didUpdatePremiumGiftFieldIcon = totalEvents++;
-    public static final int storiesEnabledUpdate = totalEvents++;
 
     //global
     public static final int pushMessagesUpdated = totalEvents++;
@@ -271,7 +271,6 @@ public class NotificationCenter {
     public static final int premiumStatusChangedGlobal = totalEvents++;
     public static final int currentUserShowLimitReachedDialog = totalEvents++;
     public static final int billingProductDetailsUpdated = totalEvents++;
-    public static final int billingConfirmPurchaseError = totalEvents++;
     public static final int premiumStickersPreviewLoaded = totalEvents++;
     public static final int userEmojiStatusUpdated = totalEvents++;
     public static final int requestPermissions = totalEvents++;
@@ -281,15 +280,8 @@ public class NotificationCenter {
     public static int didUpdateGlobalAutoDeleteTimer = totalEvents++;
     public static int onDatabaseReset = totalEvents++;
     public static int wallpaperSettedToUser = totalEvents++;
-    public static int storiesUpdated = totalEvents++;
-    public static int storiesListUpdated = totalEvents++;
-    public static int storiesDraftsUpdated = totalEvents++;
+
     public static int chatlistFolderUpdate = totalEvents++;
-    public static final int uploadStoryProgress = totalEvents++;
-    public static final int uploadStoryEnd = totalEvents++;
-    public static final int customTypefacesLoaded = totalEvents++;
-    public static final int stealthModeChanged = totalEvents++;
-    public static final int onReceivedChannelDifference = totalEvents++;
 
     public static boolean alreadyLogged;
 
@@ -482,10 +474,6 @@ public class NotificationCenter {
 
     public ArrayList<NotificationCenterDelegate> getObservers(int id) {
         return observers.get(id);
-    }
-
-    public void postNotificationNameOnUIThread(final int id, final Object... args) {
-        AndroidUtilities.runOnUIThread(() -> postNotificationName(id, args));
     }
 
     public void postNotificationName(int id, Object... args) {

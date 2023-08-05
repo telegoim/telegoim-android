@@ -256,7 +256,7 @@ public class GestureDetectorFixDoubleTap {
                     break;
 
                 case MotionEvent.ACTION_DOWN:
-                    if (mDoubleTapListener != null && mListener.hasDoubleTap(ev)) {
+                    if (mDoubleTapListener != null && mListener.hasDoubleTap()) {
                         boolean hadTapMessage = mHandler.hasMessages(TAP);
                         if (hadTapMessage) mHandler.removeMessages(TAP);
                         if ((mCurrentDownEvent != null) && (mPreviousUpEvent != null)
@@ -510,7 +510,7 @@ public class GestureDetectorFixDoubleTap {
     }
 
     public static class OnGestureListener extends GestureDetector.SimpleOnGestureListener {
-        public boolean hasDoubleTap(MotionEvent e) {
+        public boolean hasDoubleTap() {
             return false;
         }
     }

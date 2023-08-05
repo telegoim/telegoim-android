@@ -133,8 +133,4 @@ public class UserObject {
         }
         return null;
     }
-
-    public static boolean isService(long user_id) {
-        return user_id == 333000 || user_id == 777000 || user_id == 42777;
-    }
 }

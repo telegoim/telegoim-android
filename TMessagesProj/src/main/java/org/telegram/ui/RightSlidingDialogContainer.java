@@ -91,7 +91,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
                     fragment.onTransitionAnimationEnd(true, false);
                     openedProgress = 1f;
                     updateOpenAnimationProgress();
-                    openAnimationFinished(false);
+                    openAnimationFinished();
                     return;
                 }
                 notificationsLocker.lock();
@@ -115,7 +115,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
                         fragment.onTransitionAnimationEnd(true, false);
                         openedProgress = 1f;
                         updateOpenAnimationProgress();
-                        openAnimationFinished(false);
+                        openAnimationFinished();
                     }
                 });
                 openAnimator.setDuration(250);
@@ -278,7 +278,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
                 NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.needCheckSystemBarColors);
             }
 
-            openAnimationFinished(false);
+            openAnimationFinished();
 
             return;
         }
@@ -306,7 +306,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
                     NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.needCheckSystemBarColors);
                 }
 
-                openAnimationFinished(false);
+                openAnimationFinished();
 
             }
         });
@@ -403,7 +403,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
                                     return;
                                 }
                                 openAnimator = null;
-                                openAnimationFinished(true);
+                                openAnimationFinished();
                             }
                         });
                         openAnimator.setDuration(250);
@@ -449,7 +449,7 @@ public abstract class RightSlidingDialogContainer extends FrameLayout {
         }
     }
 
-    public void openAnimationFinished(boolean backward) {
+    public void openAnimationFinished() {
 
     }
 

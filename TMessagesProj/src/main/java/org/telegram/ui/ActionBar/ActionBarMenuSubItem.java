@@ -99,9 +99,6 @@ public class ActionBarMenuSubItem extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, View.MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(itemHeight), View.MeasureSpec.EXACTLY));
-        if (expandIfMultiline && textView.getLayout().getLineCount() > 1) {
-            super.onMeasure(widthMeasureSpec, View.MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(itemHeight + 8), View.MeasureSpec.EXACTLY));
-        }
     }
 
     public void setItemHeight(int itemHeight) {
@@ -148,19 +145,9 @@ public class ActionBarMenuSubItem extends FrameLayout {
         setTextAndIcon(text, icon, null);
     }
 
-    boolean expandIfMultiline;
-
     public void setMultiline() {
-        setMultiline(true);
-    }
-
-    public void setMultiline(boolean changeSize) {
         textView.setLines(2);
-        if (changeSize) {
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        } else {
-            expandIfMultiline = true;
-        }
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         textView.setSingleLine(false);
         textView.setGravity(Gravity.CENTER_VERTICAL);
     }

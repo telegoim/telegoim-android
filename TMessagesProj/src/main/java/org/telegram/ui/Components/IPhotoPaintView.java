@@ -40,7 +40,7 @@ public interface IPhotoPaintView {
     boolean onTouch(MotionEvent ev);
     void setTransform(float scale, float trX, float trY, float imageWidth, float imageHeight);
     void setOnDoneButtonClickedListener(Runnable callback);
-    boolean onBackPressed();
+    void onBackPressed();
     int getEmojiPadding(boolean panned);
     RenderView getRenderView();
 

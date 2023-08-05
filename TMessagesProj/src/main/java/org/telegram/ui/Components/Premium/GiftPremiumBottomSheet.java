@@ -53,7 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView implements NotificationCenter.NotificationCenterDelegate {
+public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView {
     private PremiumGradient.PremiumGradientTools gradientTools;
     private PremiumGradient.PremiumGradientTools outlineGradient;
     private PremiumButtonView premiumButtonView;
@@ -76,7 +76,6 @@ public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView impl
     @SuppressLint("NotifyDataSetChanged")
     public GiftPremiumBottomSheet(BaseFragment fragment, TLRPC.User user) {
         super(fragment, false, true);
-        fixNavigationBar();
         this.user = user;
 
         gradientTools = new PremiumGradient.PremiumGradientTools(Theme.key_premiumGradient1, Theme.key_premiumGradient2, -1, -1);
@@ -94,7 +93,69 @@ public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView impl
 
         dummyCell = new PremiumGiftTierCell(getContext());
 
-        initData();
+        TLRPC.UserFull userFull = MessagesController.getInstance(currentAccount).getUserFull(user.id);
+        if (userFull != null) {
+            List<QueryProductDetailsParams.Product> products = new ArrayList<>();
+            long pricePerMonthMax = 0;
+            for (TLRPC.TL_premiumGiftOption option : userFull.premium_gifts) {
+                GiftTier giftTier = new GiftTier(option);
+                giftTiers.add(giftTier);
+                if (BuildVars.useInvoiceBilling()) {
+                    if (giftTier.getPricePerMonth() > pricePerMonthMax) {
+                        pricePerMonthMax = giftTier.getPricePerMonth();
+                    }
+                } else if (giftTier.giftOption.store_product != null && BillingController.getInstance().isReady()) {
+                    products.add(QueryProductDetailsParams.Product.newBuilder()
+                                    .setProductType(BillingClient.ProductType.INAPP)
+                                    .setProductId(giftTier.giftOption.store_product)
+                            .build());
+                }
+            }
+            if (BuildVars.useInvoiceBilling()) {
+                for (GiftTier tier : giftTiers) {
+                    tier.setPricePerMonthRegular(pricePerMonthMax);
+                }
+            } else if (!products.isEmpty()) {
+                long startMs = System.currentTimeMillis();
+                BillingController.getInstance().queryProductDetails(products, (billingResult, list) -> {
+                    long pricePerMonthMaxStore = 0;
+
+                    for (ProductDetails details : list) {
+                        for (GiftTier giftTier : giftTiers) {
+                            if (giftTier.giftOption.store_product != null && giftTier.giftOption.store_product.equals(details.getProductId())) {
+                                giftTier.setGooglePlayProductDetails(details);
+
+                                if (giftTier.getPricePerMonth() > pricePerMonthMaxStore) {
+                                    pricePerMonthMaxStore = giftTier.getPricePerMonth();
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    for (GiftTier giftTier : giftTiers) {
+                        giftTier.setPricePerMonthRegular(pricePerMonthMaxStore);
+                    }
+                    AndroidUtilities.runOnUIThread(()-> {
+                        recyclerListView.getAdapter().notifyDataSetChanged();
+                        updateButtonText(System.currentTimeMillis() - startMs > 1000);
+                    });
+                });
+            }
+        }
+
+        if (!giftTiers.isEmpty()) {
+            selectedTierIndex = 0;
+            updateButtonText(false);
+        }
+
+        headerRow = rowsCount++;
+        tiersStartRow = rowsCount;
+        rowsCount += giftTiers.size();
+        tiersEndRow = rowsCount;
+        footerRow = rowsCount++;
+        buttonRow = rowsCount++;
+
         recyclerListView.setOnItemClickListener((view, position) -> {
             if (view instanceof PremiumGiftTierCell) {
                 PremiumGiftTierCell giftTierCell = (PremiumGiftTierCell) view;
@@ -152,92 +213,6 @@ public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView impl
             path.addRoundRect(AndroidUtilities.rectTmp, AndroidUtilities.dp(12), AndroidUtilities.dp(12), Path.Direction.CW);
             canvas.clipPath(path);
         });
-    }
-
-    private void initData() {
-        giftTiers.clear();
-        rowsCount = 0;
-        TLRPC.UserFull userFull = MessagesController.getInstance(currentAccount).getUserFull(user.id);
-        if (userFull != null) {
-            List<QueryProductDetailsParams.Product> products = new ArrayList<>();
-            long pricePerMonthMax = 0;
-            for (TLRPC.TL_premiumGiftOption option : userFull.premium_gifts) {
-                GiftTier giftTier = new GiftTier(option);
-                giftTiers.add(giftTier);
-                if (BuildVars.useInvoiceBilling()) {
-                    if (giftTier.getPricePerMonth() > pricePerMonthMax) {
-                        pricePerMonthMax = giftTier.getPricePerMonth();
-                    }
-                } else if (giftTier.giftOption.store_product != null && BillingController.getInstance().isReady()) {
-                    products.add(QueryProductDetailsParams.Product.newBuilder()
-                            .setProductType(BillingClient.ProductType.INAPP)
-                            .setProductId(giftTier.giftOption.store_product)
-                            .build());
-                }
-            }
-            if (BuildVars.useInvoiceBilling()) {
-                for (GiftTier tier : giftTiers) {
-                    tier.setPricePerMonthRegular(pricePerMonthMax);
-                }
-            } else if (!products.isEmpty()) {
-                long startMs = System.currentTimeMillis();
-                BillingController.getInstance().queryProductDetails(products, (billingResult, list) -> {
-                    long pricePerMonthMaxStore = 0;
-
-                    for (ProductDetails details : list) {
-                        for (GiftTier giftTier : giftTiers) {
-                            if (giftTier.giftOption.store_product != null && giftTier.giftOption.store_product.equals(details.getProductId())) {
-                                giftTier.setGooglePlayProductDetails(details);
-
-                                if (giftTier.getPricePerMonth() > pricePerMonthMaxStore) {
-                                    pricePerMonthMaxStore = giftTier.getPricePerMonth();
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    for (GiftTier giftTier : giftTiers) {
-                        giftTier.setPricePerMonthRegular(pricePerMonthMaxStore);
-                    }
-                    AndroidUtilities.runOnUIThread(() -> {
-                        recyclerListView.getAdapter().notifyDataSetChanged();
-                        updateButtonText(System.currentTimeMillis() - startMs > 1000);
-                    });
-                });
-            }
-        }
-
-        if (!giftTiers.isEmpty()) {
-            selectedTierIndex = 0;
-            updateButtonText(false);
-        }
-
-        headerRow = rowsCount++;
-        tiersStartRow = rowsCount;
-        rowsCount += giftTiers.size();
-        tiersEndRow = rowsCount;
-        footerRow = rowsCount++;
-        buttonRow = rowsCount++;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.billingProductDetailsUpdated);
-    }
-
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.billingProductDetailsUpdated);
-    }
-
-    @Override
-    public void didReceivedNotification(int id, int account, Object... args) {
-        if (id == NotificationCenter.billingProductDetailsUpdated) {
-            initData();
-        }
     }
 
     private void updateButtonText(boolean animated) {
@@ -371,9 +346,9 @@ public class GiftPremiumBottomSheet extends BottomSheetWithRecyclerListView impl
     protected RecyclerListView.SelectionAdapter createAdapter() {
         return new RecyclerListView.SelectionAdapter() {
             private final static int VIEW_TYPE_HEADER = 0,
-                    VIEW_TYPE_TIER = 1,
-                    VIEW_TYPE_FOOTER = 2,
-                    VIEW_TYPE_BUTTON = 3;
+                VIEW_TYPE_TIER = 1,
+                VIEW_TYPE_FOOTER = 2,
+                VIEW_TYPE_BUTTON = 3;
 
             @Override
             public boolean isEnabled(RecyclerView.ViewHolder holder) {

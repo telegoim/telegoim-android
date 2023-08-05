@@ -9,8 +9,8 @@ public class FlagSecureReason {
 
     private static HashMap<Window, Integer> currentSecureReasons;
 
-    private final Window window;
-    private final FlagSecureCondition condition;
+    private Window window;
+    private FlagSecureCondition condition;
 
     public FlagSecureReason(Window window, FlagSecureCondition condition) {
         this.window = window;
@@ -74,6 +74,7 @@ public class FlagSecureReason {
     public static boolean isSecuredNow(Window window) {
         return currentSecureReasons != null && currentSecureReasons.get(window) != null;
     }
+
 
     public interface FlagSecureCondition {
         boolean run();

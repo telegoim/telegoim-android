@@ -26,6 +26,7 @@ import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ReplacementSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -297,6 +298,7 @@ public class SpoilerEffect extends Drawable {
             long curTime = System.currentTimeMillis();
             int dt = (int) Math.min(curTime - lastDrawTime, renderDelayMs);
             boolean hasAnimator = false;
+
 
             lastDrawTime = curTime;
 
@@ -621,8 +623,7 @@ public class SpoilerEffect extends Drawable {
      */
     public static void clipOutCanvas(Canvas canvas, List<SpoilerEffect> spoilers) {
         tempPath.rewind();
-        for (int i = 0; i < spoilers.size(); i++) {
-            SpoilerEffect eff = spoilers.get(i);
+        for (SpoilerEffect eff : spoilers) {
             Rect b = eff.getBounds();
             tempPath.addRect(b.left, b.top, b.right, b.bottom, Path.Direction.CW);
         }

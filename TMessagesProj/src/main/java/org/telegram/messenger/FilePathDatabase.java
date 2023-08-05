@@ -442,7 +442,6 @@ public class FilePathDatabase {
                             list = new ArrayList<>();
                             filesByDialogId.put(fileMeta.dialogId, list);
                         }
-                        keepMediaFiles.get(i).isStory = fileMeta.messageType == MessageObject.TYPE_STORY;
                         list.add(keepMediaFiles.get(i));
                     }
                 }
@@ -470,7 +469,6 @@ public class FilePathDatabase {
             synchronized (this) {
                 if (dispatchQueue == null) {
                     dispatchQueue = new DispatchQueue("files_database_queue_" + currentAccount);
-                    dispatchQueue.setPriority(Thread.MAX_PRIORITY);
                 }
             }
         }

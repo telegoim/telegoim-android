@@ -79,9 +79,6 @@ public:
     static void useJavaVM(JavaVM *vm, bool useJavaByteBuffers);
 #endif
 
-    void reconnect(int32_t datacentrId, int32_t connectionType);
-    void failNotRunningRequest(int32_t token);
-
 private:
     static void *ThreadProc(void *data);
 
@@ -206,7 +203,6 @@ private:
     int *pipeFd = nullptr;
     NativeByteBuffer *networkBuffer;
 
-    requestsList waitingLoginRequests;
     requestsList requestsQueue;
     requestsList runningRequests;
     std::vector<uint32_t> requestingSaltsForDc;
@@ -256,7 +252,6 @@ private:
     friend class Config;
     friend class FileLog;
     friend class Handshake;
-
 };
 
 #ifdef ANDROID

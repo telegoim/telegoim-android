@@ -52,11 +52,9 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
-
 import androidx.annotation.DoNotInline;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
 import com.google.android.exoplayer2.PlayerMessage.Target;
 import com.google.android.exoplayer2.Renderer.MessageType;
 import com.google.android.exoplayer2.analytics.AnalyticsCollector;
@@ -95,15 +93,13 @@ import com.google.android.exoplayer2.util.Size;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoDecoderOutputBufferRenderer;
 import com.google.android.exoplayer2.video.VideoFrameMetadataListener;
+import com.google.android.exoplayer2.video.VideoListener;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
 import com.google.android.exoplayer2.video.VideoSize;
 import com.google.android.exoplayer2.video.spherical.CameraMotionListener;
 import com.google.android.exoplayer2.video.spherical.SphericalGLSurfaceView;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-
-import org.telegram.messenger.DispatchQueue;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -217,7 +213,6 @@ import java.util.concurrent.TimeoutException;
   private int maskingWindowIndex;
   private int maskingPeriodIndex;
   private long maskingWindowPositionMs;
-  private DispatchQueue workerQueue;
 
   @SuppressLint("HandlerLeak")
   public ExoPlayerImpl(ExoPlayer.Builder builder, @Nullable Player wrappingPlayer) {
@@ -495,11 +490,6 @@ import java.util.concurrent.TimeoutException;
   public @PlaybackSuppressionReason int getPlaybackSuppressionReason() {
     verifyApplicationThread();
     return playbackInfo.playbackSuppressionReason;
-  }
-
-  @Override
-  public void setWorkerQueue(DispatchQueue dispatchQueue) {
-    workerQueue = dispatchQueue;
   }
 
   @Override
@@ -2561,11 +2551,7 @@ import java.util.concurrent.TimeoutException;
       }
       if (this.videoOutput == ownedSurface) {
         // We're replacing a surface that we are responsible for releasing.
-        try {
-          ownedSurface.release();
-        } catch (Throwable e) {
-
-        }
+        ownedSurface.release();
         ownedSurface = null;
       }
     }
@@ -2606,15 +2592,8 @@ import java.util.concurrent.TimeoutException;
   private void maybeNotifySurfaceSizeChanged(int width, int height) {
     if (width != surfaceSize.getWidth() || height != surfaceSize.getHeight()) {
       surfaceSize = new Size(width, height);
-      if (workerQueue != null) {
-        workerQueue.postRunnable(() -> {
-          listeners.sendEvent(
-                  EVENT_SURFACE_SIZE_CHANGED, listener -> listener.onSurfaceSizeChanged(width, height));
-        });
-      } else {
-        listeners.sendEvent(
-                EVENT_SURFACE_SIZE_CHANGED, listener -> listener.onSurfaceSizeChanged(width, height));
-      }
+      listeners.sendEvent(
+          EVENT_SURFACE_SIZE_CHANGED, listener -> listener.onSurfaceSizeChanged(width, height));
     }
   }
 
@@ -2986,33 +2965,12 @@ import java.util.concurrent.TimeoutException;
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-      if (workerQueue != null) {
-        workerQueue.postRunnable(() -> {
-          onSurfaceTextureAvailableInternal(surfaceTexture, width, height);
-        });
-      } else {
-        onSurfaceTextureAvailableInternal(surfaceTexture, width, height);
-      }
-    }
-
-    public void onSurfaceTextureAvailableInternal(SurfaceTexture surfaceTexture, int width, int height) {
       setSurfaceTextureInternal(surfaceTexture);
       maybeNotifySurfaceSizeChanged(width, height);
     }
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int width, int height) {
-      if (workerQueue != null) {
-        workerQueue.postRunnable(() -> {
-          onSurfaceTextureSizeChangedInternal(surfaceTexture, width, height);
-        });
-      } else {
-        onSurfaceTextureSizeChangedInternal(surfaceTexture, width,  height);
-      }
-    }
-
-
-    public void onSurfaceTextureSizeChangedInternal(SurfaceTexture surfaceTexture, int width, int height) {
       maybeNotifySurfaceSizeChanged(width, height);
     }
 
@@ -3023,33 +2981,13 @@ import java.util.concurrent.TimeoutException;
           return false;
         }
       }
-      if (workerQueue != null) {
-        workerQueue.postRunnable(() -> {
-          onSurfaceTextureDestroyedInternal(surfaceTexture);
-        });
-      } else {
-        onSurfaceTextureDestroyedInternal(surfaceTexture);
-      }
-      return true;
-    }
-
-    public void onSurfaceTextureDestroyedInternal(SurfaceTexture surfaceTexture) {
       setVideoOutputInternal(/* videoOutput= */ null);
       maybeNotifySurfaceSizeChanged(/* width= */ 0, /* height= */ 0);
+      return true;
     }
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-      if (workerQueue != null) {
-        workerQueue.postRunnable(() -> {
-          onSurfaceTextureUpdatedInternal(surfaceTexture);
-        });
-      } else {
-        onSurfaceTextureUpdatedInternal(surfaceTexture);
-      }
-    }
-
-    public void onSurfaceTextureUpdatedInternal(SurfaceTexture surfaceTexture) {
       for (com.google.android.exoplayer2.video.VideoListener videoListener : videoListeners) {
         videoListener.onSurfaceTextureUpdated(surfaceTexture);
       }

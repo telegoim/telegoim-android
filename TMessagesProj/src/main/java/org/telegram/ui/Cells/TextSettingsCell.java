@@ -46,7 +46,7 @@ public class TextSettingsCell extends FrameLayout {
     private boolean imageViewIsColorful;
     private BackupImageView valueBackupImageView;
     private ImageView valueImageView;
-    public boolean needDivider;
+    private boolean needDivider;
     private boolean canDisable;
     private boolean drawLoading;
     private int padding;
