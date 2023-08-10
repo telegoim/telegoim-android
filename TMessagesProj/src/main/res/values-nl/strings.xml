@@ -1369,7 +1369,7 @@
     <string name="ALongTimeAgo">lang geleden gezien</string>
     <string name="NewMessageTitle">Nieuw bericht</string>
     <string name="InviteFriendsHelp">Kies contacten en nodig ze uit voor Telegoim</string>
-    <string name="InviteToTelegram">NODIG UIT VOOR TELEGRAM</string>
+    <string name="InviteToTelegram">NODIG UIT VOOR TELEGOIM</string>
     <string name="ShareTelegram">Telegoim delen...</string>
     <string name="UpdateContactsTitle">Contacten bijwerken?</string>
     <string name="UpdateContactsMessage">Veel van je contacten zijn niet gesynchroniseerd, wil je deze synchroniseren? Kies \'OK\' als je je eigen apparaat, SIM en Google-account gebruikt.</string>

@@ -1369,7 +1369,7 @@
     <string name="ALongTimeAgo">vor langer Zeit gesehen</string>
     <string name="NewMessageTitle">Neue Nachricht</string>
     <string name="InviteFriendsHelp">Kontakte wählen, die du einladen möchtest</string>
-    <string name="InviteToTelegram">ZU TELEGRAM EINLADEN</string>
+    <string name="InviteToTelegram">ZU TELEGOIM EINLADEN</string>
     <string name="ShareTelegram">Telegoim teilen...</string>
     <string name="UpdateContactsTitle">Kontakte aktualisieren?</string>
     <string name="UpdateContactsMessage">Telegoim hat viele nicht synchronisierte Kontakte erkannt. Möchtest du diese jetzt synchronisieren? \'OK\' wählen, wenn du dein eigenes Gerät, SIM-Karte und Google-Konto benutzt.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Telegoim</string>
+    <string name="AppNameBeta">Telegoim Beta</string>
     <string name="LanguageName">Português (Brasil)</string>
     <string name="English">Inglês</string>
     <string name="LanguageNameInEnglish">Portuguese (Brazil)</string>
@@ -23,12 +23,12 @@
     <!--code enter view-->
     <string name="YourCode">Verificar Número</string>
     <string name="SentSmsCode">Enviamos um SMS com um código de ativação para **%1$s**.</string>
-    <string name="SentAppCode">Enviamos o código para o app do **Telegram** em seu outro dispositivo.</string>
-    <string name="SentAppCodeTitle">Confira suas mensagens no Telegram</string>
+    <string name="SentAppCode">Enviamos o código para o app do **Telegoim** em seu outro dispositivo.</string>
+    <string name="SentAppCodeTitle">Confira suas mensagens no Telegoim</string>
     <string name="SentSmsCodeTitle">Inserir código</string>
-    <string name="SentCallCode">Estamos ligando para o seu telefone **%1$s**.\n\nNão atenda, o Telegram processará tudo automaticamente.</string>
+    <string name="SentCallCode">Estamos ligando para o seu telefone **%1$s**.\n\nNão atenda, o Telegoim processará tudo automaticamente.</string>
     <string name="SentCallOnly">Estamos ligando no seu **%1$s** para ditar o código.</string>
-    <string name="CallText">O Telegram te ligará em %1$d:%2$02d</string>
+    <string name="CallText">O Telegoim te ligará em %1$d:%2$02d</string>
     <string name="SmsText">Vamos te enviar um SMS em %1$d:%2$02d</string>
     <string name="Calling">Estamos te ligando...</string>
     <string name="SendingSms">Enviando SMS...</string>
@@ -37,7 +37,7 @@
     <string name="DidNotGetTheCode">Não recebeu o código?</string>
     <string name="DidNotGetTheCodeSms">Enviar o código por SMS</string>
     <string name="CancelAccountReset">Cancelar Exclusão da Conta</string>
-    <string name="CancelAccountResetInfo2">Alguém com acesso ao número **%1$s** solicitou excluir a sua conta do Telegram e redefinir a sua senha de Verificação em Duas Etapas.\n\nSe não foi você, digite o código que acabamos de enviar via SMS. Você também pode cancelar isso *alterando o seu número de telefone*.</string>
+    <string name="CancelAccountResetInfo2">Alguém com acesso ao número **%1$s** solicitou excluir a sua conta do Telegoim e redefinir a sua senha de Verificação em Duas Etapas.\n\nSe não foi você, digite o código que acabamos de enviar via SMS. Você também pode cancelar isso *alterando o seu número de telefone*.</string>
     <string name="ResetAccount">Apagar conta</string>
     <string name="ResetAccountInfo">Como a conta %1$s está ativa e protegida por uma senha, ela será apagada em 1 semana. Esse tempo é necessário por questões de segurança.\n\nVocê pode cancelar esse processo a qualquer momento.</string>
     <string name="ResetAccountStatus">Você poderá redefinir a sua conta em:</string>
@@ -45,7 +45,7 @@
     <string name="ResetAccountButton">APAGAR CONTA</string>
     <string name="CancelLinkExpired">O link expirou ou está inválido.</string>
     <string name="CancelLinkSuccess">O processo de exclusão da sua conta %1$s foi cancelado. Você pode fechar esta janela agora.</string>
-    <string name="OtherLoginCode">Seu código de login é **%1$s**. Digite ele no app do Telegram no qual você está tentando fazer o login.\n\nNão informe esse código para ninguém.</string>
+    <string name="OtherLoginCode">Seu código de login é **%1$s**. Digite ele no app do Telegoim no qual você está tentando fazer o login.\n\nNão informe esse código para ninguém.</string>
     <!--signup view-->
     <string name="YourName">Seu Nome</string>
     <string name="RegisterText2">Digite seu nome e coloque uma foto de perfil.</string>
@@ -82,7 +82,7 @@
     <string name="PaymentBillingAddress">Endereço de cobrança</string>
     <string name="PaymentCardName">Nome e Sobrenome</string>
     <string name="PaymentCardSavePaymentInformation">Salvar Dados de Pagamento</string>
-    <string name="PaymentCardSavePaymentInformationInfoLine1">Você pode salvar os dados de pagamento para uso futuro. Isso será salvo diretamente no provedor de pagamento, o Telegram não tem acesso aos dados do seu cartão de crédito.</string>
+    <string name="PaymentCardSavePaymentInformationInfoLine1">Você pode salvar os dados de pagamento para uso futuro. Isso será salvo diretamente no provedor de pagamento, o Telegoim não tem acesso aos dados do seu cartão de crédito.</string>
     <string name="PaymentCardSavePaymentInformationInfoLine2">Por favor, *ative a Verificação em Duas Etapas* para ativar isso.</string>
     <string name="PaymentTransactionReview">Revisão da Transação</string>
     <string name="PaymentTransactionMessage2">Transferir **%1$s** para o bot %2$s por **%3$s**?</string>
@@ -104,7 +104,7 @@
     <string name="PaymentFailed">Desculpe, o pagamento foi recusado.</string>
     <string name="PaymentConnectionFailed">Não foi possível encontrar o servidor de pagamento. Verifique sua conexão e tente novamente.</string>
     <string name="PaymentWarning">Atenção</string>
-    <string name="PaymentWarningText">Nem o Telegram, nem %1$s terão acesso ao número do seu cartão de crédito. Os detalhes do cartão de crédito serão tratados apenas pelo sistema de pagamentos, %2$s.\n\nPagamentos irão diretamente para o desenvolvedor de %1$s. O Telegram não pode prover qualquer garantia, então proceda por sua conta e risco. Em caso de problemas, contate o desenvolvedor de %1$s ou o seu banco.</string>
+    <string name="PaymentWarningText">Nem o Telegoim, nem %1$s terão acesso ao número do seu cartão de crédito. Os detalhes do cartão de crédito serão tratados apenas pelo sistema de pagamentos, %2$s.\n\nPagamentos irão diretamente para o desenvolvedor de %1$s. O Telegoim não pode prover qualquer garantia, então proceda por sua conta e risco. Em caso de problemas, contate o desenvolvedor de %1$s ou o seu banco.</string>
     <string name="PaymentPassword">Senha &amp; Email</string>
     <string name="PaymentPasswordTitle">Senha</string>
     <string name="PaymentPasswordEnter">Insira uma senha</string>
@@ -125,7 +125,7 @@
     <string name="NewGroup">Novo Grupo</string>
     <string name="Yesterday">ontem</string>
     <string name="NoResult">Nenhum resultado.</string>
-    <string name="NoChats">Boas-vindas ao Telegram</string>
+    <string name="NoChats">Boas-vindas ao Telegoim</string>
     <string name="RecentlyViewed">Visualizado recentemente</string>
     <string name="RecentlyViewedHide">ESCONDER</string>
     <string name="NoChatsHelp">Comece a conversar ao tocar no botão de lápis no canto inferior direito.</string>
@@ -199,7 +199,7 @@
     <string name="DisappearingPhoto">Foto Autodestrutiva</string>
     <string name="DisappearingVideo">Vídeo Autodestrutivo</string>
     <string name="DisappearingGif">GIF Autodestrutivo</string>
-    <string name="CompatibilityChat">%1$s está usando uma versão mais antiga do Telegram, por isso fotos secretas serão mostradas em modo de compatibilidade.\n\nAssim que %2$s atualizar o Telegram, fotos com timers de 1 minuto ou menos passarão a funcionar no modo ‘Toque e segure para ver’, e você será notificado caso a outra pessoa salve a tela.</string>
+    <string name="CompatibilityChat">%1$s está usando uma versão mais antiga do Telegoim, por isso fotos secretas serão mostradas em modo de compatibilidade.\n\nAssim que %2$s atualizar o Telegoim, fotos com timers de 1 minuto ou menos passarão a funcionar no modo ‘Toque e segure para ver’, e você será notificado caso a outra pessoa salve a tela.</string>
     <string name="SearchMessages">Mensagens</string>
     <string name="Search">Buscar</string>
     <string name="MuteNotifications">Silenciar notificações</string>
@@ -237,10 +237,10 @@
     <string name="Strike">Tachado</string>
     <string name="Underline">Sublinhado</string>
     <string name="Regular">Regular</string>
-    <string name="ContactsPermissionAlert">O **Telegram** precisa acessar seus contatos para que você possa se comunicar com seus amigos em todos os seus dispositivos. Seus contatos serão continuamente sincronizados na nuvem fortemente criptografada do Telegram.</string>
+    <string name="ContactsPermissionAlert">O **Telegoim** precisa acessar seus contatos para que você possa se comunicar com seus amigos em todos os seus dispositivos. Seus contatos serão continuamente sincronizados na nuvem fortemente criptografada do Telegoim.</string>
     <string name="ContactsPermissionAlertNotNow">AGORA NÃO</string>
     <string name="ContactsPermissionAlertContinue">CONTINUAR</string>
-    <string name="YourContacts">Seus contatos no Telegram</string>
+    <string name="YourContacts">Seus contatos no Telegoim</string>
     <string name="ArchiveHintHeader1">Este é o seu Arquivo</string>
     <string name="ArchiveHintText1">Os chats com notificações ativadas são desarquivados quando novas notificações chegam.</string>
     <string name="ArchiveHintHeader2">Chats silenciados</string>
@@ -297,11 +297,11 @@
     <string name="ImportedInfo">A mensagem foi importada de outro aplicativo. Não podemos garantir que seja real.</string>
     <string name="ImportUploading">Importando mensagens e mídias... **%d%%**</string>
     <string name="ImportImportingTitle">Importando chat</string>
-    <string name="ImportImportingInfo">Por favor, mantenha o Telegram aberto\naté que a importação seja concluída.</string>
+    <string name="ImportImportingInfo">Por favor, mantenha o Telegoim aberto\naté que a importação seja concluída.</string>
     <string name="ImportCount">%1$s de %2$s</string>
     <string name="ImportDone">Pronto</string>
     <string name="ImportDoneTitle">Chat importado com sucesso!</string>
-    <string name="ImportDoneInfo">Libere espaço no seu dispositivo importando mais chats para o Telegram.</string>
+    <string name="ImportDoneInfo">Libere espaço no seu dispositivo importando mais chats para o Telegoim.</string>
     <string name="ImporImportingService">Importando mensagens e mídias...</string>
     <string name="ImporImportingStickersService">Importando stickers...</string>
     <string name="ImportHeader">Importar mensagens e mídias para...</string>
@@ -337,7 +337,7 @@
     <string name="MegaLeaveAlertWithName">Tem certeza de que deseja sair do grupo **%1$s**?</string>
     <string name="GroupUserCantAdd">Desculpe, você não pode adicionar esse usuário a grupos.</string>
     <string name="GroupUserAddLimit">Desculpe, este grupo está lotado.</string>
-    <string name="GroupUserLeftError">Desculpe, se uma pessoa não faz mais parte de um grupo, você precisa estar nos contatos do Telegram dela para conseguir adicioná-la de volta ao grupo.\n\nNote que ainda é possível que essa pessoa entre usando um link de convite do grupo desde que não esteja na lista de Usuários Removidos.</string>
+    <string name="GroupUserLeftError">Desculpe, se uma pessoa não faz mais parte de um grupo, você precisa estar nos contatos do Telegoim dela para conseguir adicioná-la de volta ao grupo.\n\nNote que ainda é possível que essa pessoa entre usando um link de convite do grupo desde que não esteja na lista de Usuários Removidos.</string>
     <string name="GroupUserCantAdmin">Desculpe, há muitos administradores neste grupo.</string>
     <string name="PublicChannelsTooMuch">Desculpe, o usuário tem muitos grupos ou canais públicos. Por favor, peça que ele mude algum desses para privado primeiro.</string>
     <string name="LocatedChannelsTooMuch">Desculpe, o usuário tem muitos grupos baseados em localização. Por favor, peça que ele apague ou transfira um primeiro.</string>
@@ -456,7 +456,7 @@
     <string name="ChannelRemoveUserAdmin">Dispensar admin</string>
     <string name="ChannelEditPermissions">Editar permissões</string>
     <string name="ChannelMembersInfo">Somente admins do canal podem ver esta lista.</string>
-    <string name="ChannelLinkInfo">Qualquer pessoa que tenha o Telegram instalado poderá participar do seu canal seguindo esse link.</string>
+    <string name="ChannelLinkInfo">Qualquer pessoa que tenha o Telegoim instalado poderá participar do seu canal seguindo esse link.</string>
     <string name="ChannelAdminsInfo">Você pode adicionar administradores para ajudar você a gerenciar o seu canal. Aperte e segure para removê-los.</string>
     <string name="ChannelJoinTo">Deseja entrar no canal \'%1$s\'?</string>
     <string name="ChannelCantOpenPrivate">Desculpe, este chat não está mais acessível.</string>
@@ -464,7 +464,7 @@
     <string name="ChannelCantOpenBanned">Infelizmente você foi banido de participar de grupos públicos.</string>
     <string name="ChannelCantOpenNa">Desculpe, este chat não está mais acessível.</string>
     <string name="ChannelAddTo">Adicionar %1$s ao canal?</string>
-    <string name="ChannelUserLeftError">Desculpe, se uma pessoa não faz mais parte de um canal, você precisa estar nos contatos do Telegram dela para adicioná-la de volta ao canal.\n\nNote que ela ainda poderá entrar usando um link de convite do canal, desde que não esteja na lista de Usuários Removidos.</string>
+    <string name="ChannelUserLeftError">Desculpe, se uma pessoa não faz mais parte de um canal, você precisa estar nos contatos do Telegoim dela para adicioná-la de volta ao canal.\n\nNote que ela ainda poderá entrar usando um link de convite do canal, desde que não esteja na lista de Usuários Removidos.</string>
     <string name="ChannelUserCantAdd">Desculpe, você não pode adicionar esse usuário em canais.</string>
     <string name="ChannelUserCantAdmin">Desculpe, há muitos administradores neste canal.</string>
     <string name="ChannelUserCantBot">Desculpe, há bots demais neste canal.</string>
@@ -902,7 +902,7 @@
     <string name="SendingGame">jogando...</string>
     <string name="SendingVideoStatus">enviando um vídeo...</string>
     <string name="SendingFile">enviando um arquivo...</string>
-    <string name="GotAQuestion">Tem alguma dúvida\nsobre o Telegram?</string>
+    <string name="GotAQuestion">Tem alguma dúvida\nsobre o Telegoim?</string>
     <string name="ChatGallery">Galeria</string>
     <string name="ChatLocation">Localização</string>
     <string name="ChatVideo">Vídeo</string>
@@ -957,7 +957,7 @@
     <string name="OpenUrlOption1">Entrar em %1$s como %2$s</string>
     <string name="OpenUrlOption2">Permitir que **%1$s** me envie mensagens</string>
     <string name="CancelSending">Cancelar o envio</string>
-    <string name="BotPermissionGameAlert">Permitir que %1$s passe seu nome no Telegram e ID (não o seu número de telefone) para páginas que você abrir com esse bot?</string>
+    <string name="BotPermissionGameAlert">Permitir que %1$s passe seu nome no Telegoim e ID (não o seu número de telefone) para páginas que você abrir com esse bot?</string>
     <string name="ReportSpamLocation">GRUPO SEM RELAÇÃO COM O LOCAL?</string>
     <string name="ReportUnrelatedGroup">Denunciar grupo sem relação</string>
     <string name="ReportUnrelatedGroupText">Por favor, nos diga se este grupo não está relacionado com este local:\n\n**%1$s**</string>
@@ -970,7 +970,7 @@
     <string name="AddContactChat">ADICIONAR CONTATO</string>
     <string name="AddContactFullChat">ADD %1$s A CONTATOS</string>
     <string name="ViewContact">VER CONTATO</string>
-    <string name="BlockUserAlert">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegram?</string>
+    <string name="BlockUserAlert">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegoim?</string>
     <string name="BlockUserReplyAlert">Deseja bloquear as mensagens de **%1$s**?</string>
     <string name="ReportSpamAlert">Tem certeza de que deseja denunciar este usuário por spam?</string>
     <string name="ReportSpamAlertGroup">Tem certeza de que deseja denunciar este grupo por spam?</string>
@@ -1018,7 +1018,7 @@
     <string name="ReportInfo">Por favor, insira detalhes adicionais relevantes à sua denúncia.</string>
     <string name="ReportHint">Detalhes adicionais...</string>
     <string name="ReportSend">Enviar Denúncia</string>
-    <string name="ReportSentInfo">Os moderadores do Telegram avaliarão a sua denúncia.\nObrigado!</string>
+    <string name="ReportSentInfo">Os moderadores do Telegoim avaliarão a sua denúncia.\nObrigado!</string>
     <string name="ReportChatSpam">Spam</string>
     <string name="ReportChatFakeAccount">Conta Falsa</string>
     <string name="ReportChatViolence">Violência</string>
@@ -1096,7 +1096,7 @@
     <string name="URL">URL</string>
     <string name="MapPreviewProvider">Provedor de Prévia de Mapas</string>
     <string name="MapPreviewProviderTitle">Provedor da prévia de mapas</string>
-    <string name="MapPreviewProviderTelegram">Telegram</string>
+    <string name="MapPreviewProviderTelegram">Telegoim</string>
     <string name="MapPreviewProviderGoogle">Google</string>
     <string name="MapPreviewProviderYandex">Yandex</string>
     <string name="MapPreviewProviderNobody">Sem prévias</string>
@@ -1138,10 +1138,10 @@
     <string name="SendDice">ENVIAR</string>
     <string name="PsaType_covid">COVID-19</string>
     <string name="PsaTypeDefault">A.U.P.</string>
-    <string name="PsaInfo_covid">Esta mensagem fornece um aviso de utilidade pública em relação à pandemia atual de COVID-19. Saiba mais sobre esta iniciativa em https://telegram.org/blog/coronavirus.</string>
+    <string name="PsaInfo_covid">Esta mensagem fornece um aviso de utilidade pública em relação à pandemia atual de COVID-19. Saiba mais sobre esta iniciativa em https://telegoim.com/blog/coronavirus.</string>
     <string name="PsaInfoDefault">Teste A.U.P.</string>
     <string name="PsaMessage_covid">Notificação – COVID-19</string>
-    <string name="PsaMessageInfo_covid">Esta mensagem fornece um aviso de utilidade pública em relação à pandemia atual de COVID-19. Saiba mais sobre esta iniciativa em https://telegram.org/blog/coronavirus.</string>
+    <string name="PsaMessageInfo_covid">Esta mensagem fornece um aviso de utilidade pública em relação à pandemia atual de COVID-19. Saiba mais sobre esta iniciativa em https://telegoim.com/blog/coronavirus.</string>
     <string name="PsaMessageDefault">Notificação Importante</string>
     <string name="PsaMessageInfoDefault">Esta é uma notificação importante.</string>
     <string name="PsaHideChatAlertTitle">Ocultar chat</string>
@@ -1268,15 +1268,15 @@
     <string name="NotificationGroupKickMember">%1$s removeu %3$s do grupo %2$s</string>
     <string name="NotificationGroupKickYou">%1$s removeu você do grupo %2$s</string>
     <string name="NotificationGroupLeftMember">%1$s saiu do grupo %2$s</string>
-    <string name="NotificationContactJoined">%1$s entrou para o Telegram!</string>
-    <string name="NotificationUnrecognizedDevice">%1$s,\nDetectamos que alguém acessou a sua conta a partir de um novo dispositivo em %2$s\n\nDispositivo: %3$s\nLocalização: %4$s\n\nSe não foi você, vá em Configurações &gt; Dispositivos e termine essa sessão.\n\nSe você acha que alguém acessou a sua conta sem a sua permissão, você pode habilitar a Verificação em Duas Etapas nas configurações de Privacidade e Segurança.\n\nAtenciosamente,\nEquipe do Telegram.</string>
+    <string name="NotificationContactJoined">%1$s entrou para o Telegoim!</string>
+    <string name="NotificationUnrecognizedDevice">%1$s,\nDetectamos que alguém acessou a sua conta a partir de um novo dispositivo em %2$s\n\nDispositivo: %3$s\nLocalização: %4$s\n\nSe não foi você, vá em Configurações &gt; Dispositivos e termine essa sessão.\n\nSe você acha que alguém acessou a sua conta sem a sua permissão, você pode habilitar a Verificação em Duas Etapas nas configurações de Privacidade e Segurança.\n\nAtenciosamente,\nEquipe do Telegoim.</string>
     <string name="NotificationContactNewPhoto">%1$s atualizou a foto do perfil</string>
     <string name="NotificationInvitedToGroupByLink">%1$s entrou para o grupo %2$s via link de convite</string>
     <string name="NotificationGroupFew">%1$s enviou %3$s ao grupo %2$s</string>
     <string name="NotificationGroupAlbum">%1$s enviou um álbum para o grupo %2$s</string>
     <string name="NotificationGroupForwardedFew">%1$s encaminhou %3$s ao grupo %2$s</string>
-    <string name="NotificationHiddenName">Telegram</string>
-    <string name="NotificationHiddenChatName">Telegram</string>
+    <string name="NotificationHiddenName">Telegoim</string>
+    <string name="NotificationHiddenChatName">Telegoim</string>
     <string name="NotificationHiddenChatUserName">Usuário</string>
     <string name="NotificationHiddenMessage">Nova mensagem</string>
     <string name="Reply">Responder</string>
@@ -1341,7 +1341,7 @@
     <string name="NotificationActionPinnedGeoLiveUser">%1$s fixou uma localização ao vivo</string>
     <string name="NotificationActionPinnedGifUser">%1$s fixou um GIF</string>
     <string name="NotificationActionPinnedMusicUser">%1$s fixou um arquivo de áudio</string>
-    <string name="SecretChatName">Telegram</string>
+    <string name="SecretChatName">Telegoim</string>
     <!--contacts view-->
     <string name="SelectContact">Selecione um Contato</string>
     <string name="SelectContacts">Selecionar Contatos</string>
@@ -1349,7 +1349,7 @@
     <string name="ShareContactTitle">Compartilhar Contato</string>
     <string name="AddContactPhonebookTitle">Adicionar Contato</string>
     <string name="NoContacts">Ainda não há contatos.</string>
-    <string name="InviteText2">Ei, eu tô usando o Telegram para conversar. Baixa também: %1$s</string>
+    <string name="InviteText2">Ei, eu tô usando o Telegoim para conversar. Baixa também: %1$s</string>
     <string name="TodayAt">às</string>
     <string name="YesterdayAt">ontem às</string>
     <string name="TodayAtFormatted">às %1$s</string>
@@ -1368,17 +1368,17 @@
     <string name="WithinAMonth">visto no último mês</string>
     <string name="ALongTimeAgo">visto há muito tempo</string>
     <string name="NewMessageTitle">Nova Mensagem</string>
-    <string name="InviteFriendsHelp">Selecione os contatos para convidá-los ao Telegram</string>
-    <string name="InviteToTelegram">CONVIDAR PARA O TELEGRAM</string>
-    <string name="ShareTelegram">Compartilhar o Telegram...</string>
+    <string name="InviteFriendsHelp">Selecione os contatos para convidá-los ao Telegoim</string>
+    <string name="InviteToTelegram">CONVIDAR PARA O TELEGOIM</string>
+    <string name="ShareTelegram">Compartilhar o Telegoim...</string>
     <string name="UpdateContactsTitle">Atualizar contatos?</string>
-    <string name="UpdateContactsMessage">O Telegram detectou muitos contatos não sincronizados, deseja sincronizá-los agora? Escolha \'OK\' se você está usando seu próprio celular, cartão SIM e conta do Google.</string>
+    <string name="UpdateContactsMessage">O Telegoim detectou muitos contatos não sincronizados, deseja sincronizá-los agora? Escolha \'OK\' se você está usando seu próprio celular, cartão SIM e conta do Google.</string>
     <string name="SortedByName">Listado por Nome</string>
     <string name="SortedByLastSeen">Listado por Visto por Último</string>
     <string name="AddContactByPhone">Adicionar %1$s</string>
     <string name="PhoneNumberSearch">Número de telefone</string>
-    <string name="NoContactsYet">Você ainda não tem contatos no Telegram</string>
-    <string name="NoContactsYetLine1">Convide amigos para testar o Telegram</string>
+    <string name="NoContactsYet">Você ainda não tem contatos no Telegoim</string>
+    <string name="NoContactsYetLine1">Convide amigos para testar o Telegoim</string>
     <string name="NoContactsYetLine2">Encontre pessoas próximas</string>
     <string name="NoContactsYetLine3">Busque pessoas por nome de usuário</string>
     <string name="NewContactAlertTitle">Novo contato</string>
@@ -1422,7 +1422,7 @@
     <string name="RevokeLinkAlertChannel">Tem certeza de que deseja desativar o link **%1$s**?\n\nO canal \"**%2$s**\" se tornará privado.</string>
     <string name="CopyLink">Copiar Link</string>
     <string name="ShareLink">Compartilhar Link</string>
-    <string name="LinkInfo">Qualquer pessoa que tiver o Telegram instalado poderá participar do seu grupo usando esse link.</string>
+    <string name="LinkInfo">Qualquer pessoa que tiver o Telegoim instalado poderá participar do seu grupo usando esse link.</string>
     <string name="SearchForPeople">Buscar por pessoas...</string>
     <string name="SearchForPeopleAndGroups">Buscar por usuários e grupos...</string>
     <string name="GigagroupConvertTitle">Grupos de Transmissão</string>
@@ -1460,16 +1460,16 @@
     <string name="ShareContact">Compartilhar contato</string>
     <string name="AddContact">Adicionar contato</string>
     <string name="AddContactTitle">Adicionar Contato</string>
-    <string name="ContactNotRegisteredTitle">Convidar para o Telegram</string>
-    <string name="ContactNotRegistered">%1$s ainda não está no Telegram. Gostaria de fazer um convite?</string>
+    <string name="ContactNotRegisteredTitle">Convidar para o Telegoim</string>
+    <string name="ContactNotRegistered">%1$s ainda não está no Telegoim. Gostaria de fazer um convite?</string>
     <string name="Invite">Convidar</string>
     <string name="Block">BLOQUEAR</string>
     <string name="BlockAndDeleteReplies">SIM E APAGAR RESPOSTAS</string>
     <string name="BlockContact">Bloquear usuário</string>
     <string name="BlockUser">Bloquear usuário</string>
     <string name="BlockUsers">Bloquear</string>
-    <string name="BlockUserMessage">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegram?</string>
-    <string name="BlockUsersMessage">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegram?</string>
+    <string name="BlockUserMessage">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegoim?</string>
+    <string name="BlockUsersMessage">Deseja bloquear as mensagens e chamadas de **%1$s** no Telegoim?</string>
     <string name="UserBlocked">Usuário bloqueado</string>
     <string name="UserUnblocked">Usuário desbloqueado</string>
     <string name="EditContact">Editar contato</string>
@@ -1500,7 +1500,7 @@
     <string name="MessageLifetimeVideo">Se você definir um timer, o vídeo irá se autodestruir após ser visto.</string>
     <string name="ShortMessageLifetimeForever">Desativado</string>
     <string name="EncryptionKeyDescription">Essa imagem e texto foram derivados da chave criptográfica para este chat secreto com **%1$s**.\n\nSe você vê o mesmo no dispositivo de **%2$s**, a criptografia de ponta a ponta está garantida.</string>
-    <string name="EncryptionKeyLink">https://telegram.org/faq/pt-br#chats-secretos</string>
+    <string name="EncryptionKeyLink">https://telegoim.com/faq/pt-br#chats-secretos</string>
     <string name="NumberUnknown">Desconhecido</string>
     <string name="PhoneHidden">Desconhecido</string>
     <string name="MobileHidden">Número oculto</string>
@@ -1534,7 +1534,7 @@
     <string name="UsernameInvalidShort">O nome de usuário deve ter pelo menos 5 caracteres.</string>
     <string name="UsernameInvalidLong">O nome de usuário não pode exceder 32 caracteres.</string>
     <string name="UsernameInvalidStartNumber">Nomes de usuário não podem começar com um número.</string>
-    <string name="UsernameHelp">Você pode escolher um nome de usuário no **Telegram**. Se escolher, as pessoas poderão te encontrar pelo nome de usuário e entrar em contato sem precisar do seu número de telefone.\n\nVocê pode usar **a–z**, **0–9** e underline.\nO tamanho mínimo é de **5** caracteres.</string>
+    <string name="UsernameHelp">Você pode escolher um nome de usuário no **Telegoim**. Se escolher, as pessoas poderão te encontrar pelo nome de usuário e entrar em contato sem precisar do seu número de telefone.\n\nVocê pode usar **a–z**, **0–9** e underline.\nO tamanho mínimo é de **5** caracteres.</string>
     <string name="UsernameHelpLink">Este link abre um chat com você:\n%1$s</string>
     <string name="UsernameChecking">Verificando nome de usuário...</string>
     <string name="UsernameAvailable">%1$s está disponível.</string>
@@ -1586,8 +1586,8 @@
     <string name="NoEmojiFound">Nenhum emoji encontrado</string>
     <string name="NoMasks">Nenhuma máscara</string>
     <string name="EmojiSuggestions">Sugestões de Emoji</string>
-    <string name="EmojiSuggestionsInfo">O **Telegram** permite que você encontre emojis por milhares de palavras-chave, mas sempre há algo faltando. Se você quiser sugerir uma nova substituição de emoji, você pode nos ajudar visitando:</string>
-    <string name="EmojiSuggestionsUrl">https://translations.telegram.org/%1$s/emoji</string>
+    <string name="EmojiSuggestionsInfo">O **Telegoim** permite que você encontre emojis por milhares de palavras-chave, mas sempre há algo faltando. Se você quiser sugerir uma nova substituição de emoji, você pode nos ajudar visitando:</string>
+    <string name="EmojiSuggestionsUrl">https://translations.telegoim.com/%1$s/emoji</string>
     <string name="Masks">Máscaras</string>
     <string name="MasksInfo">Você pode adicionar máscaras em fotos que você envia. Para isso, abra o editor de fotos antes de enviar uma foto.</string>
     <string name="FeaturedStickers">Stickers Populares</string>
@@ -1596,7 +1596,7 @@
     <string name="SuggestStickersAll">Todos os Pacotes</string>
     <string name="SuggestStickersInstalled">Meus Pacotes</string>
     <string name="SuggestStickersNone">Nenhum</string>
-    <string name="FeaturedStickersInfo">Esses são os stickers em alta no Telegram. Você pode adicionar stickers personalizados usando o bot @stickers.</string>
+    <string name="FeaturedStickersInfo">Esses são os stickers em alta no Telegoim. Você pode adicionar stickers personalizados usando o bot @stickers.</string>
     <string name="StickersBotInfo">Artistas têm as boas-vindas para adicionar seus próprios pacotes usando o bot @stickers.</string>
     <string name="ArchivedStickers">Stickers Arquivados</string>
     <string name="ArchivedMasks">Máscaras Arquivadas</string>
@@ -1628,7 +1628,7 @@
     <string name="ImportStickersLinkTaken">Desculpe, esse link não está disponível.</string>
     <string name="ImportStickersImportingTitle">Importando stickers</string>
     <string name="ImportStickersDoneTitle">Stickers importados com sucesso!</string>
-    <string name="ImportStickersDoneInfo">Importe mais stickers para o Telegram e compartilhe com os amigos.</string>
+    <string name="ImportStickersDoneInfo">Importe mais stickers para o Telegoim e compartilhe com os amigos.</string>
     <!--theme view-->
     <string name="Theme">Tema</string>
     <string name="AutoNightTheme">Modo Noturno Automático</string>
@@ -1683,7 +1683,7 @@
     <string name="NewThemeTitle">Novo Tema</string>
     <string name="EditThemeTitle">Editar Tema</string>
     <string name="CreateNewThemeHelp">Toque no ícone da paleta para visualizar a lista de elementos de cada tela - e editá-los.</string>
-    <string name="CreateNewThemeAlert">Você pode criar seu próprio tema alterando as cores dentro do aplicativo.\n\nVocê sempre pode voltar para o tema padrão do Telegram aqui.</string>
+    <string name="CreateNewThemeAlert">Você pode criar seu próprio tema alterando as cores dentro do aplicativo.\n\nVocê sempre pode voltar para o tema padrão do Telegoim aqui.</string>
     <string name="ThemeSetUrlHelp">Você pode usar a-z, 0-9 e underline.\nO tamanho mínimo é de 5 caracteres.</string>
     <string name="ThemeHelpLink">O seu tema será atualizado para todos sempre que você atualizar ele. Qualquer um pode instalar usando este link:\n%1$s</string>
     <string name="ThemeCreateHelp">Qualquer pessoa pode instalar o seu tema usando este link. Quando você alterar o tema, ele será atualizado para todos os usuários que o instalaram.\n\nO tema terá como base o tema e o papel de parede selecionados atualmente.</string>
@@ -1781,7 +1781,7 @@
     <string name="NotificationsAndSounds">Notificações e Sons</string>
     <string name="CustomNotifications">Notificações Personalizadas</string>
     <string name="ProfilePopupNotification">Notificações popup</string>
-    <string name="ProfilePopupNotificationInfo">Novas mensagens desse contato aparecerão em sua tela quando você não estiver no Telegram.</string>
+    <string name="ProfilePopupNotificationInfo">Novas mensagens desse contato aparecerão em sua tela quando você não estiver no Telegoim.</string>
     <string name="NotificationsLed">LED de notificação</string>
     <string name="NotificationsLedColor">Cor</string>
     <string name="ColorBlue">Azul</string>
@@ -1869,7 +1869,7 @@
     <string name="MessagesSettings">Mensagens</string>
     <string name="SendByEnter">Enviar usando Enter</string>
     <string name="Events">Eventos</string>
-    <string name="ContactJoined">Contato entrou para o Telegram</string>
+    <string name="ContactJoined">Contato entrou para o Telegoim</string>
     <string name="PinnedMessages">Mensagens Fixadas</string>
     <string name="Language">Idioma</string>
     <string name="LanguageCustom">Personalizado</string>
@@ -1880,8 +1880,8 @@
     <string name="LanguageUnofficial">Idiomas não oficiais</string>
     <string name="LanguageUnsupportedError">Esse idioma não existe.</string>
     <string name="LanguageSame">Você já está usando esse pacote de idiomas (**%1$s**). Você pode alterar seu idioma a qualquer momento em Configurações.</string>
-    <string name="LanguageUnknownCustomAlert">Infelizmente esse pacote de idiomas personalizado (**%1$s**) não contém dados para o Telegram no Android.</string>
-    <string name="AskAQuestionInfo">Por favor, note que o Suporte do Telegram é feito por voluntários. Tentaremos responder o mais rápido possível, mas pode levar um tempo.\n\nDê uma olhada na página de <![CDATA[<a href=\"https://telegram.org/faq/pt-br#questoes-gerais\">Perguntas Frequentes</a>]]>: há dicas e soluções para a maioria dos <![CDATA[<a href=\"https://telegram.org/faq/pt-br#solucao-de-problemas\">problemas</a>]]>.</string>
+    <string name="LanguageUnknownCustomAlert">Infelizmente esse pacote de idiomas personalizado (**%1$s**) não contém dados para o Telegoim no Android.</string>
+    <string name="AskAQuestionInfo">Por favor, note que o Suporte do Telegoim é feito por voluntários. Tentaremos responder o mais rápido possível, mas pode levar um tempo.\n\nDê uma olhada na página de <![CDATA[<a href=\"https://telegram.org/faq/pt-br#questoes-gerais\">Perguntas Frequentes</a>]]>: há dicas e soluções para a maioria dos <![CDATA[<a href=\"https://telegram.org/faq/pt-br#solucao-de-problemas\">problemas</a>]]>.</string>
     <string name="AskButton">Perguntar</string>
     <string name="TelegramFAQ">Perguntas Frequentes</string>
     <string name="TelegramFaq">Perguntas Frequentes</string>

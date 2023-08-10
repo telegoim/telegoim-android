@@ -1369,7 +1369,7 @@
     <string name="ALongTimeAgo">últ. vez hace mucho tiempo</string>
     <string name="NewMessageTitle">Nuevo mensaje</string>
     <string name="InviteFriendsHelp">Elige contactos para invitarlos a Telegoim</string>
-    <string name="InviteToTelegram">INVITAR A TELEGRAM</string>
+    <string name="InviteToTelegram">INVITAR A TELEGOIM</string>
     <string name="ShareTelegram">Compartir Telegoim...</string>
     <string name="UpdateContactsTitle">¿Actualizar contactos?</string>
     <string name="UpdateContactsMessage">Telegoim ha detectado muchos contactos sin sincronizar. ¿Quieres sincronizarlos ahora? Elige “OK” si estás usando tu dispositivo, tarjeta SIM y cuenta de Google.</string>

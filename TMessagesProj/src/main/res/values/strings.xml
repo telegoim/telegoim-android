@@ -1727,7 +1727,7 @@
     <string name="MessageLifetimePhoto">If you set a timer, the photo will self-destruct after it was viewed.</string>
     <string name="MessageLifetimeVideo">If you set a timer, the video will self-destruct after it was viewed.</string>
     <string name="ShortMessageLifetimeForever">Off</string>
-    <string name="EncryptionKeyDescription">This image and text were derived from the encryption key for this secret chat with **%1$s**.\n\nIf they look the same on **%2$s\'s** device, end-to-end encryption is guaranteed.\n\nLearn more at Telegoim.org</string>
+    <string name="EncryptionKeyDescription">This image and text were derived from the encryption key for this secret chat with **%1$s**.\n\nIf they look the same on **%2$s\'s** device, end-to-end encryption is guaranteed.\n\nLearn more at Telegoim.com</string>
     <string name="EncryptionKeyLink">https://telegoim.com/faq#secret-chats</string>
     <string name="NumberUnknown">Unknown</string>
     <string name="PhoneHidden">Unknown</string>
@@ -2530,7 +2530,7 @@
     <string name="ChannelDescriptionChanged">Channel description updated.</string>
     <string name="CheckPhoneNumber">Is %1$s still your number?</string>
     <string name="CheckPhoneNumberInfo">Keep your number up to date to ensure you can always log into Telegoim. **Learn more**</string>
-    <string name="CheckPhoneNumberLearnMoreUrl">https://telegoim.org/faq#q-i-have-a-new-phone-number-what-do-i-do</string>
+    <string name="CheckPhoneNumberLearnMoreUrl">https://telegoim.com/faq#q-i-have-a-new-phone-number-what-do-i-do</string>
     <string name="CheckPhoneNumberYes">Yes</string>
     <string name="CheckPhoneNumberNo">No</string>
     <!--cache view-->
