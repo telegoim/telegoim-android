@@ -1700,13 +1700,17 @@ void ConnectionsManager::initDatacenters() {
     if (!testBackend) {
         if (datacenters.find(1) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 1);
-            datacenter->addAddressAndPort("192.168.1.20", 10443, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 10790, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 10950, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 11210, 0, "");
             datacenters[1] = datacenter;
         }
     } else {
         if (datacenters.find(1) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 1);
-            datacenter->addAddressAndPort("192.168.1.20", 10443, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 10790, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 10950, 0, "");
+            datacenter->addAddressAndPort("43.143.178.223", 11210, 0, "");
             datacenters[1] = datacenter;
         }
     }
